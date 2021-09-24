@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/app.css">
+    <title>Mylibrary</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <h1>Shri Ramkrishna Institute of technology and applied sciences</h1>
+        </div>
+        <div class="main-login">
+            <form action="login" method="post">
+                <p>Login to continue to the library</p>
+
+                <%if(messages.error){%>
+                    <p class="error-msg"><%=messages.error%></p>
+                <%}%>
+                <input type="text" name="enrollment" placeholder="Enrollment-no">
+                <button type="submit">Login</button>
+            </form>
+
+        </div>
+    </div>
+</body>
+</html>
