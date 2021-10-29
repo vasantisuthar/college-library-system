@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css2?family=Barlow:wght@500&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300&family=Barlow:wght@200&display=swap);
 * {
   padding: 0;
   margin: 0;
@@ -9,6 +11,7 @@
   padding: 9px 5px;
   background-color: #316B83;
   color: #D5BFBF;
+  font-family: "Barlow", sans-serif;
 }
 .wrapper .main-login {
   text-align: center;
@@ -41,7 +44,7 @@
 }
 .wrapper .main-login button {
   width: 205px;
-  padding: 10px;
+  padding: 7px;
   margin: 13px;
   cursor: pointer;
   font-size: larger;
@@ -54,8 +57,155 @@
   background-color: #63B4B8;
 }
 
+.nav-container {
+  background-color: #ebeef1;
+  margin-bottom: 2%;
+}
+.nav-container .navbar {
+  padding: 0.1% 9%;
+  display: flex;
+  justify-content: space-between;
+}
+.nav-container .nav-brand a {
+  font-family: "Barlow", sans-serif;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #245569;
+  text-decoration: none;
+}
+.nav-container .nav-list {
+  display: flex;
+  padding: 0 3%;
+}
+.nav-container .nav-list a {
+  padding: 0 5%;
+  font-family: "Barlow", sans-serif;
+  font-size: 1.18rem;
+  cursor: pointer;
+  color: #245569;
+  text-decoration: none;
+}
+
+.addBooks-container {
+  margin: 3% 9%;
+  width: 700px;
+  height: auto;
+  background-color: #A2CDCD;
+  border-radius: 4px;
+}
+.addBooks-container form {
+  margin: 8% 6%;
+  padding: 4% 4%;
+  display: flex;
+  flex-direction: column;
+}
+.addBooks-container form input {
+  padding: 1.5% 1.5%;
+  margin: 2% 0;
+  border-radius: 4px;
+  border: 2px solid #dadce0;
+}
+.addBooks-container form button {
+  padding: 1%;
+  width: 18%;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: #6D8299;
+  border: none;
+  color: white;
+}
+
+.home-wrapper {
+  margin: 3% 9%;
+}
+.home-wrapper p {
+  font-family: "Barlow", sans-serif;
+  font-size: 1.3rem;
+}
+.home-wrapper p span {
+  color: #245569;
+}
+.home-wrapper .books-container {
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.home-wrapper .books-container .search {
+  background-color: none;
+  border: none;
+}
+.home-wrapper .form-books {
+  margin: 3% 1%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.home-wrapper .books-details {
+  position: relative;
+  height: 300px;
+  width: 210px;
+  border: 1px solid #dadce0;
+  padding: 4% 16%;
+  margin-right: 2%;
+  text-align: center;
+  border-radius: 4px;
+}
+.home-wrapper .books-details:hover {
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+.home-wrapper .books-details p:first-child {
+  font-family: "Barlow", sans-serif;
+  padding-top: 2%;
+}
+.home-wrapper .books-details p:nth-child(2), .home-wrapper .books-details :nth-child(3) {
+  font-family: "Barlow", sans-serif;
+  font-family: "Barlow Condensed", sans-serif;
+  padding: -5% 0%;
+}
+.home-wrapper .books-details .dropdown-toggle {
+  position: absolute;
+  top: 3%;
+  right: -24%;
+  background-color: #fff;
+  outline: none;
+  border: none;
+  color: #6c757d;
+}
+.home-wrapper .books-details .issueBook {
+  position: absolute;
+  bottom: 0;
+  right: 0.1%;
+  width: 100%;
+  margin-top: 5%;
+  padding: 2%;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: #63B4B8;
+  color: white;
+  outline: none;
+  border: none;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
 @media screen and (max-width: 660px) {
   .main-login form {
     height: 30vh;
+  }
+
+  .addBooks-container {
+    max-width: 83%;
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-60%, -70%);
+  }
+  .addBooks-container form button {
+    width: 100%;
   }
 }

@@ -1,4 +1,14 @@
 <%- include('../partials/header') %>
-<p>Add books</p>
+<div class="addBooks-container">
+        <%if(messages.error){%>
+            <p class="error-msg"><%=messages.error%></p>
+        <%}%>
+        <form action="/add" method="post">
+            <input type="text" name="title" id="title" placeholder="Book Title" required>
+            <input type="text" name="author" id="author" placeholder="Book author" required> 
+            <input type="text" name="edition" id = "edition" placeholder="Book edition" required>
+            <button type="submit" id="liveToastBtn" class="add-book">Add</button>
+        </form>
+</div>
 
 <%- include('../partials/footer') %>
