@@ -12,7 +12,6 @@ function studentController(){
             Book.deleteOne({_id : selectedBook},(err)=>{
                 if(!err){
                     res.redirect('/');
-
                 }else{
                     console.log(err);
                 }

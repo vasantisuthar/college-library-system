@@ -13,48 +13,57 @@
   color: #D5BFBF;
   font-family: "Barlow", sans-serif;
 }
-.wrapper .main-login {
-  text-align: center;
-  margin: 10% auto;
-}
-.wrapper .main-login form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.wrapper .main-login .error-msg {
+
+.error-msg {
   color: red;
   padding: 0;
   margin: 0px;
-  font-size: 20px;
 }
-.wrapper .main-login p {
-  margin: 3% 0;
-  font-size: 30px;
-  color: #6D8299;
+
+.body-main {
+  height: 87vh;
+  display: flex;
+  align-items: center;
+  padding-bottom: 70px;
+  background-color: #f5f5f5;
 }
-.wrapper .main-login input {
-  padding: 10px;
-  font-size: 15px;
-  color: grey;
-  outline: none;
-  border: 2px solid #6D8299;
-  border-radius: 4px;
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
 }
-.wrapper .main-login button {
-  width: 205px;
-  padding: 7px;
-  margin: 13px;
-  cursor: pointer;
-  font-size: larger;
+.form-signin button {
   color: white;
   background-color: #A2CDCD;
-  border-radius: 4px;
   border: 2px solid #63B4B8;
 }
-.wrapper .main-login button:hover {
+.form-signin button:hover {
   background-color: #63B4B8;
+}
+.form-signin img {
+  margin-bottom: -9%;
+}
+
+.form-signin .checkbox {
+  font-weight: 400;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type=email] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type=password] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 .nav-container {
@@ -193,8 +202,8 @@
 }
 
 @media screen and (max-width: 660px) {
-  .main-login form {
-    height: 30vh;
+  .form-signin {
+    height: 70vh;
   }
 
   .addBooks-container {

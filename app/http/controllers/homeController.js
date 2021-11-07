@@ -20,17 +20,12 @@ function homeController(){
         },
         search(req, res){
             const searchedBook = req.body.bookname;
-            Book.findOne({title:searchedBook}, (err, foundBook) =>{
+            Book.find({$or : [{title:{$regex: searchedBook, $options:"$i"}}, 
+                   {author:{$regex: searchedBook, $options:"$i"}}]}, (err, foundBook) =>{
                 if(!err){
-                    if(foundBook){
-                        console.log(foundBook)
-                        res.render('student/search',{
-                            title:foundBook.title, 
-                            author : foundBook.author, 
-                            edition : foundBook.edition,
-                            id : foundBook._id
-                    })
-                    }else if(!foundBook){
+                    if(foundBook.length != 0){
+                        res.render('student/search',{foundBook: foundBook})
+                    }else if(foundBook.length == 0){
                         req.flash("search","Not found");
                         return res.redirect('/');
                     }
