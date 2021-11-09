@@ -1,14 +1,42 @@
 <%- include('../partials/header') %>
-<div class="addBooks-container">
-        <%if(messages.error){%>
-            <p class="error-msg"><%=messages.error%></p>
-        <%}%>
+
+<div id="login-box">
+    <div class="left">
+      <p>Add books</p>
+      <%if(messages.error){%>
+        <p class="error-msg"><%=messages.error%></p>
+    <%}%>
+      <form action="/add" method="post">
+        <input type="text" name="title" placeholder="Book Title" required/>
+        <input type="text" name="author" placeholder="Book Author" required/>
+        <input type="text" name="edition" placeholder="Book Edition" required/>
+        <input type="text" name="isbn" placeholder="ISBN Number" required/> 
+        <input type="text" name="publication" placeholder="Publication" required/> 
+
+        <div class="row">
+            <div class="col col-sm-12 col-lg-6 col-md-12 col-xs-12">
+                <input type="text" name="qty" placeholder="No of books" required/>
+            </div>
+            <div class="col col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <input type="file" name="preview" placeholder="preview" required/>
+            </div>
+        </div>
+        <input type="submit" name="signup_submit" value="Add" />
+    </form>
+
+    </div>
+    </div>
+    
+<!-- <div class="addBooks-container">
+        <if(messages.error){%>
+            <p class="error-msg"><messages.error%></p>
+        <}%>
         <form action="/add" method="post">
             <input type="text" name="title" id="title" placeholder="Book Title" required>
             <input type="text" name="author" id="author" placeholder="Book author" required> 
             <input type="text" name="edition" id = "edition" placeholder="Book edition" required>
             <button type="submit" id="liveToastBtn" class="add-book">Add</button>
         </form>
-</div>
+</div> -->
 
 <%- include('../partials/footer') %>
