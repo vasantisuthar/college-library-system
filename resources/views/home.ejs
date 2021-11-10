@@ -23,13 +23,12 @@
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                         <li><button type="submit" name="deleteButton" class="dropdown-item">Delete</button></li>
                                         <input type="hidden" name="selectedBook" value="<%=foundBooks[i]._id%>">
-                                    </ul>
+                                    </ul> 
                                 </div>
                                 <%}%>
                             <p><%=foundBooks[i].title%></p>
                             <p><%=foundBooks[i].author%></p>
-                            <p><%=foundBooks[i].edition%></p>
-                        <button type="submit" name ="issueBook" class="issueBook">Issue</button>
+                       <a href="/book/<%=foundBooks[i].title%>" class="issueBook">View</a>
                     </div>
                 </form>
             <%}%>

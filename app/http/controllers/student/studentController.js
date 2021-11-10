@@ -4,7 +4,6 @@ const Book = require('../../../models/books');
 function studentController(){
     return{
         dashboard(req, res){
-            console.log(typeof req)
             if(req.body.hasOwnProperty('deleteButton')){
             console.log("dashborad route")
             const selectedBook = req.body.selectedBook;
@@ -17,6 +16,17 @@ function studentController(){
                 }
             })
         }
+        },
+        getBook(req, res){
+                const selectedTitle = req.params.title;
+                Book.find({title:selectedTitle}, (err, foundBook) => {
+                    if(foundBook){
+                        res.render('book',{foundBook : foundBook});
+                    }
+                })
+
+                
+            
         }
     }
 }

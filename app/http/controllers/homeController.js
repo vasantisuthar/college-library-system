@@ -21,7 +21,7 @@ function homeController(){
         search(req, res){
             const searchedBook = req.body.bookname;
             Book.find({$or : [{title:{$regex: searchedBook, $options:"$i"}}, 
-                   {author:{$regex: searchedBook, $options:"$i"}}]}, (err, foundBook) =>{
+                {author:{$regex: searchedBook, $options:"$i"}}]}, (err, foundBook) =>{
                 if(!err){
                     if(foundBook.length != 0){
                         res.render('student/search',{foundBook: foundBook})

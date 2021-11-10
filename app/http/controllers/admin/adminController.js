@@ -9,7 +9,11 @@ function adminController(){
             const book = new Book({
             title,
             author,
-            edition
+            edition,
+            published,
+            isbn,
+            publisher,
+            qty
             })
             book.save().then((book) =>{
                 return res.redirect('/')
