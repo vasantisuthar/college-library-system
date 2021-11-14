@@ -20,6 +20,13 @@
   margin: 0px;
 }
 
+.success-msg {
+  color: green;
+  padding: 0;
+  margin: 0px;
+  font-size: 1rem;
+}
+
 .login-bg {
   background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)), url("/img/login-bg.jpg");
   background-size: cover;
@@ -28,7 +35,7 @@
 }
 
 .body-main {
-  max-height: 400px;
+  max-height: 500px;
   max-width: 350px;
   margin: auto;
   margin-top: 5%;
@@ -44,7 +51,7 @@
 .form-signin {
   width: 100%;
   max-width: 330px;
-  padding: 15px;
+  padding: 7px;
   margin: auto;
 }
 .form-signin button {
@@ -80,11 +87,10 @@
 }
 
 .nav-container {
-  background-color: #ebeef1;
   margin-bottom: 2%;
 }
 .nav-container .navbar {
-  padding: 0.1% 9%;
+  padding: 0.5% 9%;
   display: flex;
   justify-content: space-between;
 }
@@ -92,7 +98,7 @@
   font-family: "Barlow", sans-serif;
   font-size: 1.5rem;
   cursor: pointer;
-  color: #245569;
+  color: #FFFFF2;
   text-decoration: none;
 }
 .nav-container .nav-list {
@@ -104,8 +110,50 @@
   font-family: "Barlow", sans-serif;
   font-size: 1.18rem;
   cursor: pointer;
-  color: #245569;
+  color: #ACACAF;
   text-decoration: none;
+}
+
+.nav-scroller {
+  position: relative;
+  z-index: 2;
+  height: 2.75rem;
+  overflow-y: hidden;
+}
+
+.nav-scroller .nav {
+  margin-left: 8%;
+  display: flex;
+  flex-wrap: nowrap;
+  padding-bottom: 1rem;
+  margin-top: -1px;
+  overflow-x: auto;
+  color: rgba(255, 255, 255, 0.75);
+  text-align: center;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.nav-link {
+  background-color: #fff;
+  outline: none;
+  border: none;
+}
+
+.nav-underline .nav-link {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+.nav-underline .nav-link:hover {
+  color: #007bff;
+}
+
+.nav-underline .active {
+  font-weight: 500;
+  color: #343a40;
 }
 
 *:focus {
@@ -115,7 +163,6 @@
 body {
   margin: 0;
   padding: 0;
-  background: #DDD;
   font-size: 16px;
   color: #222;
   font-family: "Roboto", sans-serif;
@@ -282,6 +329,11 @@ input[type=submit]:active {
 
 .book-display p, .book-display h2 {
   font-family: "Barlow", sans-serif;
+}
+
+.similar-section p {
+  font-family: "Barlow", sans-serif;
+  color: #525151;
 }
 
 @media screen and (max-width: 660px) {

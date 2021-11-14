@@ -1,6 +1,6 @@
 <%- include('partials/header') %>
 <div class="home-wrapper">
-    <p>Welcome <span><%=name%>!</span></p>
+    <p>Welcome <span class="text-capitalize"><%=name%>!</span></p>
 
         <div class="books-container">
 
@@ -26,8 +26,8 @@
                                     </ul> 
                                 </div>
                                 <%}%>
-                            <p><%=foundBooks[i].title%></p>
-                            <p><%=foundBooks[i].author%></p>
+                            <p class="text-capitalize"><%=foundBooks[i].title%></p>
+                            <p class="text-capitalize"><%=foundBooks[i].author%></p>
                        <a href="/book/<%=foundBooks[i].title%>" class="issueBook">View</a>
                     </div>
                 </form>

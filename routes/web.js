@@ -28,6 +28,8 @@ function initRoutes(app){
     //admin routes
     app.get('/add',admin,adminController().addbooks);
     app.post('/add',adminController().postBooks);
+    app.get('/register',admin, adminController().register);
+    app.post('/register',adminController().registerStudent);
 }
 
 module.exports = initRoutes;

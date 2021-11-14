@@ -15,19 +15,38 @@ function studentController(){
                     console.log(err);
                 }
             })
-        }
+            }
         },
         getBook(req, res){
                 const selectedTitle = req.params.title;
-                Book.find({title:selectedTitle}, (err, foundBook) => {
-                    if(foundBook){
-                        res.render('book',{foundBook : foundBook});
+                if(selectedTitle){
+                    Book.findOne({title:selectedTitle}, (err, foundBook) => {
+                    if(err){
+                        console.log(err)
+                    }else{
+                            Book.find({publisher:{$regex:foundBook.publisher, $options:"$i"}},(err, relatedBook) =>{
+                                if(err){
+                                    console.log(err);
+                                }else{
+                                    if(relatedBook){
+                                        res.render('book',
+                                        {title:foundBook.title,
+                                        author:foundBook.author,
+                                        edition:foundBook.edition,
+                                        isbn:foundBook.isbn,
+                                        publisher:foundBook.publisher,
+                                        published:foundBook.published,
+                                        qty:foundBook.qty,
+                                        preview : foundBook.preview,
+                                        relatedBook: relatedBook})
+                                    }
+                                    
+                                }
+                        })
                     }
                 })
-
-                
-            
+                }
+            }
         }
     }
-}
 module.exports = studentController;

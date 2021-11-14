@@ -20,19 +20,40 @@ function homeController(){
         },
         search(req, res){
             const searchedBook = req.body.bookname;
-            Book.find({$or : [{title:{$regex: searchedBook, $options:"$i"}}, 
-                {author:{$regex: searchedBook, $options:"$i"}}]}, (err, foundBook) =>{
-                if(!err){
-                    if(foundBook.length != 0){
-                        res.render('student/search',{foundBook: foundBook})
-                    }else if(foundBook.length == 0){
-                        req.flash("search","Not found");
-                        return res.redirect('/');
-                    }
-                }else{
+            const categorySearch = req.body.navLink;
+            if(searchedBook){
+                Book.find({$or : [{title:{$regex : searchedBook, $options:"$i"}},
+                        {author:    {$regex:searchedBook,$options:"$i"}},
+                        {isbn:      {$regex:searchedBook,$options:"$i"}},
+                        {publisher: {$regex:searchedBook,$options:"$i"}}
+                        ]}, (err, foundBook) =>{
+                    if(!err){
+                        if(foundBook.length != 0){
+                            res.render('student/search',{foundBook: foundBook})
+                        }else if(foundBook.length == 0){
+                            req.flash("search","Not found");
+                            return res.redirect('/');
+                        }
+                    }else{
+                        console.log(err);
                         res.redirect("/");
                     }
-            })
+                })
+            }else if(categorySearch){
+                Book.find({title:{$regex:categorySearch, $options :"$i"}},(err, foundBook) => {
+                    if(!err){
+                        if(foundBook.length != 0){
+                            res.render('student/search', {foundBook: foundBook})
+                        }else if(foundBook.length == 0){
+                            req.flash("search","Not found");
+                            return res.redirect("/")
+                        }
+                    }else{
+                        console.log(err);
+                        res.redirect('/');
+                    }
+                })
+            }
         }
     }
 }
