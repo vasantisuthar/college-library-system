@@ -5,7 +5,6 @@ function studentController(){
     return{
         dashboard(req, res){
             if(req.body.hasOwnProperty('deleteButton')){
-            console.log("dashborad route")
             const selectedBook = req.body.selectedBook;
             console.log(selectedBook);
             Book.deleteOne({_id : selectedBook},(err)=>{
@@ -37,7 +36,7 @@ function studentController(){
                                         publisher:foundBook.publisher,
                                         published:foundBook.published,
                                         qty:foundBook.qty,
-                                        preview : foundBook.preview,
+                                        bookId:foundBook._id,
                                         relatedBook: relatedBook})
                                     }
                                     
@@ -46,6 +45,24 @@ function studentController(){
                     }
                 })
                 }
+            },
+            getDashboard(req, res){
+                res.render('student/dashboard');
+            },
+            issueBook(req, res){
+                const issueBookId = req.body.issueBookId;
+                Book.findById({_id:issueBookId},(err, foundBook) =>{
+                    if(!err){
+                        if(foundBook){
+                            console.log(foundBook);
+                            res.render('student/dashboard',{
+                                title : foundBook.title, 
+                                author:foundBook.author,
+                                publisher:foundBook.publisher
+                            });
+                        }
+                    }
+                })
             }
         }
     }

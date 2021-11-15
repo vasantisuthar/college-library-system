@@ -36,22 +36,20 @@
         <div class="row align-items-md-stretch">
         <div class="col-md-12">
         <div class="h-100 p-5 bg-light border rounded-3">
-            <h2><%=title%></h2>
-            <p class="fw-normal fs-5">Author : <span class="fw-lighter text-capitalize"><%=author%></span></p>
-            <p class="fw-normal fs-5">Edition : <span class="fw-lighter text-capitalize"><%=edition%></span></p>
-            <p class="fw-normal fs-5">ISBN : <span class="fw-lighter text-capitalize"><%=isbn%></span></p> 
-            <p class="fw-normal fs-5">Publisher : <span class="fw-lighter text-capitalize"><%=publisher%></span></p>
-            <p class="fw-normal fs-5">Published : <span class="fw-lighter text-capitalize"><%=published%></span></p>
-            <p class="fw-normal fs-5">No of books : <span class="fw-lighter text-capitalize"><%=qty%></span></p>
-            <!-- preview of book -->
-            <embed width="100%" height="100%" name="plugin" id="embdLink" />
-            <%if(preview != null){%>
-                <button class="btn btn-primary px-4" id="btnPrvw" value= "<%=preview%>" type="button">preview</button>
-            <%}%>
-            <%if(publisher === 'University'){%>
+            <form action="/issueBook" method="post">
+                <h2><%=title%></h2>
+                <p class="fw-normal fs-5">Author : <span class="fw-lighter text-capitalize"><%=author%></span></p>
+                <p class="fw-normal fs-5">Edition : <span class="fw-lighter text-capitalize"><%=edition%></span></p>
+                <p class="fw-normal fs-5">ISBN : <span class="fw-lighter text-capitalize"><%=isbn%></span></p> 
+                <p class="fw-normal fs-5">Publisher : <span class="fw-lighter text-capitalize"><%=publisher%></span></p>
+                <p class="fw-normal fs-5">Published : <span class="fw-lighter text-capitalize"><%=published%></span></p>
+                <p class="fw-normal fs-5">No of books : <span class="fw-lighter text-capitalize"><%=qty%></span></p>
+                <input type="hidden" name="issueBookId" value="<%=bookId%>">
+            <!-- <if(publisher === 'University'){%>
                 <button class="btn btn-warning px-4" type="button">Buy</button>
-            <%}%>
-            <button class="btn btn-secondary px-4" type="button">Issue</button>
+            <}%> -->
+                <button class="btn btn-secondary px-4" type="submit">Issue</button>
+            </form>
         </div>
         </div>
     </div>

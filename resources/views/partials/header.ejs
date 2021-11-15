@@ -35,7 +35,7 @@
             </div>
             <div class="nav-list">
                 <%if(user.role === 'Student'){%>
-                    <!-- <a href="/dashboard">Dashboard</a> -->
+                    <a href="/dashboard">Dashboard</a>
 
                 <%}else if(user.role === 'admin'){%>
                     <a href="/add">Add Books</a>
@@ -49,7 +49,9 @@
 <form action="/search" method="post">
     <div class="nav-scroller bg-body shadow-sm">
         <nav class="nav nav-underline" aria-label="Secondary navigation">
-        <a class="nav-link active fs-6" aria-current="page" href="#">Dashboard</a>
+            <%if(user.role == "admin"){%>
+                <a class="nav-link active fs-6" aria-current="page" href="/adminDashboard">Dashboard</a>
+            <%}%>
         <%if(user.role == "Student"){%>
             <a class="nav-link fs-6" href="#">
                 Categories

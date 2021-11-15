@@ -6,7 +6,7 @@ const studentController = require('../app/http/controllers/student/studentContro
 const auth = require('../app/http/middlewares/auth');
 const guest = require('../app/http/middlewares/guest');
 const admin = require('../app/http/middlewares/admin');
-const bookController = require('../app/http/controllers/bookController');
+// const bookController = require('../app/http/controllers/bookController');
 
 function initRoutes(app){
 
@@ -21,9 +21,11 @@ function initRoutes(app){
 
     //student controller
     app.post('/dashboard', studentController().dashboard);
+    app.get('/dashboard', studentController().getDashboard);
+    app.post('/issueBook', studentController().issueBook);
 
     //book controller
-    app.get('/book/:title', studentController().getBook);
+    app.get('/book/:title',studentController().getBook);
 
     //admin routes
     app.get('/add',admin,adminController().addbooks);

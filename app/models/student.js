@@ -6,5 +6,5 @@ const studentSchema = new Schema({
     enrollment: {type:String, required: true},
     standard : {type:String, required:true},
     role: {type: String, default : 'Student'}
-},{timeStamps:true});
+},{timestamps:true});
 module.exports = mongoose.model("Student", studentSchema);
