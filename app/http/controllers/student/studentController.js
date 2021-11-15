@@ -1,5 +1,6 @@
 const Student = require('../../../models/student');
 const Book = require('../../../models/books');
+const Dashboard = require('../../../models/dashboard');
 
 function studentController(){
     return{
@@ -47,19 +48,47 @@ function studentController(){
                 }
             },
             getDashboard(req, res){
-                res.render('student/dashboard');
+                Dashboard.find({studentId: req.user._id},null,{sort: {'createdAt': -1}},(err, foundBook) =>{
+                    if(!err){
+                        if(foundBook){
+                            res.render('student/dashboard',{foundBook: foundBook})
+                        }
+                    }
+                })
             },
             issueBook(req, res){
                 const issueBookId = req.body.issueBookId;
                 Book.findById({_id:issueBookId},(err, foundBook) =>{
                     if(!err){
                         if(foundBook){
-                            console.log(foundBook);
-                            res.render('student/dashboard',{
-                                title : foundBook.title, 
-                                author:foundBook.author,
-                                publisher:foundBook.publisher
-                            });
+                            Dashboard.countDocuments({studentId:req.user._id}).then((result) =>{
+                                if(result < 2){
+                                    const dashboard = new Dashboard({
+                                        studentId : req.user._id,
+                                        title : foundBook.title,
+                                        author : foundBook.author,
+                                        publisher : foundBook.publisher
+                                    })
+                                    dashboard.save().then(() =>{
+                                        Book.findOneAndUpdate({_id : issueBookId},{$inc:{qty : -1}},(err, result) =>{
+                                            if(err){
+                                                console.log(err)
+                                            }else{
+                                                res.redirect('/dashboard')
+                                            }
+                                        });
+                                    }).catch(err =>{
+                                        console.log(err);
+                                        res.redirect('/')
+                                    })
+                                }else{
+                                    req.flash('issue',"Students can issue only two books")
+                                    return res.redirect('/')
+                                }
+                            }).catch(err =>{
+                                console.log(err);
+                                res.redirect('/')
+                            })     
                         }
                     }
                 })

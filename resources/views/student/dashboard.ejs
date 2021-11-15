@@ -51,16 +51,18 @@
 <main>
   <div class="container py-4">
 
-<div class="p-5 mb-4 bg-light rounded-3">
-    <div class="container-fluid py-5">
-      <h4 class="display-6 fw-normal"><%=title%></h4>
-      <p class="col-md-8 fs-4"><%=author%></p>
-      <p class="col-md-8 fs-4"><%=publisher%></p>
-      <a href="/book/<%=title%>">
-        <button class="btn btn-primary btn-lg" type="button">View</button>
+      <%foundBook.forEach((book) =>{%>
+        <div class="p-5 mb-4 bg-light rounded-3">
+
+        <div class="container-fluid py-5">
+        <h4 class="display-6 fw-normal"><%=book.title%></h4>
+      <p class="col-md-8 fs-4"><%=book.author%></p>
+      <p class="col-md-8 fs-4"><%=book.publisher%></p>
+      <a href="/book/<%=book.title%>">
+        <button class="btn btn-primary" type="button">View</button>
         </a>
-      <!-- <p class="col-md-8 fs-4">Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. Check out the examples below for how you can remix and restyle it to your liking.</p>
-      <button class="btn btn-primary btn-lg" type="button">Example button</button> -->
+      </div>
     </div>
-  </div>
+
+      <%})%>
 <%- include('../partials/footer') %>

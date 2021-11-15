@@ -21,11 +21,11 @@ function initRoutes(app){
 
     //student controller
     app.post('/dashboard', studentController().dashboard);
-    app.get('/dashboard', studentController().getDashboard);
+    app.get('/dashboard', auth ,studentController().getDashboard);
     app.post('/issueBook', studentController().issueBook);
 
     //book controller
-    app.get('/book/:title',studentController().getBook);
+    app.get('/book/:title',auth,studentController().getBook);
 
     //admin routes
     app.get('/add',admin,adminController().addbooks);

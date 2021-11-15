@@ -14,17 +14,18 @@
   font-family: "Barlow", sans-serif;
 }
 
-.error-msg {
-  color: red;
+.error-msg, .success-msg, .issue-msg {
   padding: 0;
   margin: 0px;
+  font-size: 1rem;
 }
 
 .success-msg {
   color: green;
-  padding: 0;
-  margin: 0px;
-  font-size: 1rem;
+}
+
+.issue-msg {
+  color: #040475;
 }
 
 .login-bg {

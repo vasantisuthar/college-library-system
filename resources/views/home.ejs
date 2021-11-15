@@ -8,6 +8,11 @@
             <%if(messages.search){%>
                 <p class="error-msg"><%=messages.search%></p>
             <%}%>
+
+            <!-- validate issue -->
+            <%if(messages.issue){%>
+                <p class="issue-msg"><%=messages.issue%></p>
+            <%}%>
             <!--search form-->
             <form action="/search" class="form-control d-flex search" method="post">
                 <input class="form-control" required name="bookname" placeholder="Type to search...">
