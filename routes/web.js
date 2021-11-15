@@ -23,6 +23,7 @@ function initRoutes(app){
     app.post('/dashboard', studentController().dashboard);
     app.get('/dashboard', auth ,studentController().getDashboard);
     app.post('/issueBook', studentController().issueBook);
+    app.post('/removeIssuedBook', studentController().removeIssuedBook);
 
     //book controller
     app.get('/book/:title',auth,studentController().getBook);

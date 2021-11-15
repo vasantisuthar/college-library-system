@@ -20,6 +20,10 @@
   font-size: 1rem;
 }
 
+.error-msg {
+  color: #b80606;
+}
+
 .success-msg {
   color: green;
 }

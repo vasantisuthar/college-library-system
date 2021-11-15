@@ -1,6 +1,7 @@
 const Student = require('../../../models/student');
 const Book = require('../../../models/books');
 const Dashboard = require('../../../models/dashboard');
+const moment = require('moment');
 
 function studentController(){
     return{
@@ -51,7 +52,7 @@ function studentController(){
                 Dashboard.find({studentId: req.user._id},null,{sort: {'createdAt': -1}},(err, foundBook) =>{
                     if(!err){
                         if(foundBook){
-                            res.render('student/dashboard',{foundBook: foundBook})
+                            res.render('student/dashboard',{foundBook: foundBook, moment : moment})
                         }
                     }
                 })
@@ -62,34 +63,57 @@ function studentController(){
                     if(!err){
                         if(foundBook){
                             Dashboard.countDocuments({studentId:req.user._id}).then((result) =>{
-                                if(result < 2){
-                                    const dashboard = new Dashboard({
-                                        studentId : req.user._id,
-                                        title : foundBook.title,
-                                        author : foundBook.author,
-                                        publisher : foundBook.publisher
-                                    })
-                                    dashboard.save().then(() =>{
-                                        Book.findOneAndUpdate({_id : issueBookId},{$inc:{qty : -1}},(err, result) =>{
-                                            if(err){
-                                                console.log(err)
-                                            }else{
-                                                res.redirect('/dashboard')
-                                            }
-                                        });
-                                    }).catch(err =>{
-                                        console.log(err);
-                                        res.redirect('/')
-                                    })
-                                }else{
-                                    req.flash('issue',"Students can issue only two books")
-                                    return res.redirect('/')
-                                }
+                                Dashboard.find({title:foundBook.title},(err, found) =>{
+                                    if(found.length == 0){
+                                        if(result < 2){
+                                            const dashboard = new Dashboard({
+                                                studentId : req.user._id,
+                                                title : foundBook.title,
+                                                author : foundBook.author,
+                                                isbn : foundBook.isbn
+                                            })
+                                            dashboard.save().then(() =>{
+                                                Book.findOneAndUpdate({_id : issueBookId},{$inc:{qty : -1}},(err, result) =>{
+                                                    if(err){
+                                                        console.log(err)
+                                                    }else{
+                                                        res.redirect('/dashboard')
+                                                    }
+                                                });
+                                            }).catch(err =>{
+                                                console.log(err);
+                                                res.redirect('/')
+                                            })
+                                        }else{
+                                            req.flash('issue',"Students can issue only two books")
+                                            return res.redirect('/')
+                                        }
+                                    }else{
+                                        req.flash('issue',"Book is already issued");
+                                        return res.redirect('/')
+                                    }
+                                })      
                             }).catch(err =>{
                                 console.log(err);
                                 res.redirect('/')
                             })     
                         }
+                    }
+                })
+            },
+            removeIssuedBook(req, res){
+                const issuedBookIsbn = req.body.issuedBookIsbn;
+                Dashboard.deleteOne({isbn: issuedBookIsbn},(err, result) =>{
+                    if(result){
+                        Book.findOneAndUpdate({isbn : issuedBookIsbn},{$inc:{qty : 1}},(err, updated) =>{
+                            if(!err){
+                                if(updated){
+                                    res.redirect('/');
+                                }
+                            }else{
+                                console.log(err)
+                            }
+                        })
                     }
                 })
             }

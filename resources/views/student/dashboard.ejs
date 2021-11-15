@@ -43,26 +43,28 @@
         }
       }
     </style>
-
-    
-  </head>
+    </head>
   <body>
     
 <main>
   <div class="container py-4">
-
+    <form action="/removeIssuedBook" method="post">
       <%foundBook.forEach((book) =>{%>
         <div class="p-5 mb-4 bg-light rounded-3">
-
         <div class="container-fluid py-5">
         <h4 class="display-6 fw-normal"><%=book.title%></h4>
-      <p class="col-md-8 fs-4"><%=book.author%></p>
-      <p class="col-md-8 fs-4"><%=book.publisher%></p>
-      <a href="/book/<%=book.title%>">
-        <button class="btn btn-primary" type="button">View</button>
+        <p class="col-md-8 fs-4"><%=book.author%></p>
+        <p class="col-md-8 fs-4">ISBN : <span class="col-md-8 fs-4"><%=book.isbn%></span></p>
+        <p class="col-md-8 fs-3 fw-normal">Issue Date : <span class="col-md-8 fs-5"><%=moment(book.createdAt).format('DD-MM-YYYY')%></span></p>
+        <p class="col-md-8 fs-3 fw-normal">Return Date : <span class="col-md-8 fs-5"><%=moment(book.createdAt).add(7, 'days').format('DD-MM-YYYY')%></span></p>
+        <a href="/book/<%=book.title%>">
+          <button class="btn btn-outline-info px-4" type="button">View</button>
         </a>
-      </div>
-    </div>
+        <input type="hidden" name="issuedBookIsbn" value="<%=book.isbn%>">
 
-      <%})%>
+        <button class="btn btn-outline-danger px-4" type="submit">Remove</button>
+        </div>
+      </div>
+    <%})%>
+  </form>
 <%- include('../partials/footer') %>
