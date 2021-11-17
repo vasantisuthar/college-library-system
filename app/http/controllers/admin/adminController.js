@@ -1,5 +1,7 @@
 const Book = require('../../../models/books');
+const Dashboard = require('../../../models/dashboard');
 const Student = require('../../../models/student');
+const moment = require('moment')
 function adminController(){
     return{
         addbooks(req, res){
@@ -58,7 +60,37 @@ function adminController(){
                 return res.redirect('/register')
             });
             
+        },
+        adminDashboard(req, res){
+            Student.find({activity: "issued"},(err, foundStudent) =>{
+                if(foundStudent){
+                    res.render('admin/adminDashboard',{foundEnrollment : foundStudent});
+                }else{
+                    console.log(err);
+                }
+            })
+        },
+        getDetails(req, res){
+            const enrollment = req.params.enrollment;
+            Student.findOne({enrollment:enrollment, activity:"issued"},(err, found) =>{
+                    Dashboard.find({studentId: found._id},(err, foundDetails) =>{
+                        if(err){
+                            console.log(err)
+                        }else{
+                            res.render('admin/details',{foundDetails: foundDetails, moment : moment})
+                        }
+                })
+                
+            })
+        },
+        searchEnroll(req, res){
+            if(req.body.hasOwnProperty("searchEnrollment")){
+            const enroll = req.body.enroll;
+            Student.findOne({enrollment:enroll, activity:"issued"},(err, found) =>{
+                res.redirect('dashboard/' + enroll);
+            })
         }
+    }
     }
 }
 module.exports= adminController;

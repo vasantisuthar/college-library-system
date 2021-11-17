@@ -336,6 +336,10 @@ input[type=submit]:active {
   font-family: "Barlow", sans-serif;
 }
 
+.enrollNo {
+  text-decoration: none;
+}
+
 .similar-section p {
   font-family: "Barlow", sans-serif;
   color: #525151;

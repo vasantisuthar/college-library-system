@@ -6,8 +6,9 @@ const studentController = require('../app/http/controllers/student/studentContro
 const auth = require('../app/http/middlewares/auth');
 const guest = require('../app/http/middlewares/guest');
 const admin = require('../app/http/middlewares/admin');
-// const bookController = require('../app/http/controllers/bookController');
+const student = require('../app/http/middlewares/student');
 
+// const bookController = require('../app/http/controllers/bookController');
 function initRoutes(app){
 
     //auth routes
@@ -21,8 +22,8 @@ function initRoutes(app){
 
     //student controller
     app.post('/dashboard', studentController().dashboard);
-    app.get('/dashboard', auth ,studentController().getDashboard);
-    app.post('/issueBook', studentController().issueBook);
+    app.get('/dashboard', student ,studentController().getDashboard);
+    app.post('/issueBook',student, studentController().issueBook);
     app.post('/removeIssuedBook', studentController().removeIssuedBook);
 
     //book controller
@@ -33,6 +34,9 @@ function initRoutes(app){
     app.post('/add',adminController().postBooks);
     app.get('/register',admin, adminController().register);
     app.post('/register',adminController().registerStudent);
+    app.get('/admindashboard',adminController().adminDashboard);
+    app.get('/dashboard/:enrollment',admin, adminController().getDetails);
+    app.post('/searchEnroll',adminController().searchEnroll);
 }
 
 module.exports = initRoutes;

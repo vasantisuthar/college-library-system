@@ -63,7 +63,7 @@ function studentController(){
                     if(!err){
                         if(foundBook){
                             Dashboard.countDocuments({studentId:req.user._id}).then((result) =>{
-                                Dashboard.find({title:foundBook.title},(err, found) =>{
+                                Dashboard.find({title:foundBook.title,studentId:req.user._id},(err, found) =>{
                                     if(found.length == 0){
                                         if(result < 2){
                                             const dashboard = new Dashboard({
@@ -79,6 +79,9 @@ function studentController(){
                                                     }else{
                                                         res.redirect('/dashboard')
                                                     }
+                                                });
+                                                Student.findByIdAndUpdate({_id:req.user._id},{$set:{"activity":"issued"}},{upsert:true},(err, updated) =>{
+                                                    console.log(updated);
                                                 });
                                             }).catch(err =>{
                                                 console.log(err);
