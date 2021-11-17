@@ -13,8 +13,11 @@
                 <p class="fw-normal fs-5">ISBN : <span class="fw-lighter text-capitalize"><%=isbn%></span></p> 
                 <p class="fw-normal fs-5">Publisher : <span class="fw-lighter text-capitalize"><%=publisher%></span></p>
                 <p class="fw-normal fs-5">Published : <span class="fw-lighter text-capitalize"><%=published%></span></p>
-                <p class="fw-normal fs-5">No of books : <span class="fw-lighter text-capitalize"><%=qty%></span></p>
+                <p class="fw-normal fs-5">No of books available: <span class="fw-lighter text-capitalize"><%=qty%></span></p>
                 <input type="hidden" name="issueBookId" value="<%=bookId%>">
+                <%if(user.role === "admin"){%>
+                    <p class="fw-normal fs-5">Total Books : <span class="fw-lighter text-capitalize"><%=totalBooks%></span></p>
+                <%}%>
             <!-- <if(publisher === 'University'){%>
                 <button class="btn btn-warning px-4" type="button">Buy</button>
             <}%> -->

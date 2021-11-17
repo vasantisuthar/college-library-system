@@ -39,6 +39,7 @@ function studentController(){
                                         published:foundBook.published,
                                         qty:foundBook.qty,
                                         bookId:foundBook._id,
+                                        totalBooks:foundBook.totalBooks,
                                         relatedBook: relatedBook})
                                     }
                                     

@@ -9,6 +9,7 @@ const bookSchema = new Schema({
     publisher:      {type:String, required:true},
     published:      {type:Date, required:true},
     qty:            {type:Number, required:true},
+    totalBooks:     {type:Number, required:true},
     preview:        {type:Buffer}
 },{timestamps: true})
 
