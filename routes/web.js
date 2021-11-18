@@ -21,7 +21,7 @@ function initRoutes(app){
     app.post('/search',homeController().search);
 
     //student controller
-    app.post('/dashboard', studentController().dashboard);
+    // app.post('/dashboard', studentController().dashboard);
     app.get('/dashboard', student ,studentController().getDashboard);
     app.post('/issueBook',student, studentController().issueBook);
     app.post('/removeIssuedBook', studentController().removeIssuedBook);

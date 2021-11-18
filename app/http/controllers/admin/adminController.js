@@ -17,9 +17,11 @@ function adminController(){
             isbn,
             publisher,
             qty,
+            totalBooks,
             preview
             })
             book.save().then((book) =>{
+                req.flash('success',"Book is added successfully");
                 return res.redirect('/')
             })
             .catch(err =>{

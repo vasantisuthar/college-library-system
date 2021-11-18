@@ -5,19 +5,6 @@ const moment = require('moment');
 
 function studentController(){
     return{
-        dashboard(req, res){
-            if(req.body.hasOwnProperty('deleteButton')){
-            const selectedBook = req.body.selectedBook;
-            console.log(selectedBook);
-            Book.deleteOne({_id : selectedBook},(err)=>{
-                if(!err){
-                    res.redirect('/');
-                }else{
-                    console.log(err);
-                }
-            })
-            }
-        },
         getBook(req, res){
                 const selectedTitle = req.params.title;
                 if(selectedTitle){

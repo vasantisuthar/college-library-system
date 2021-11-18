@@ -22,15 +22,6 @@
                 <%for(var i = 0; i<=9; i++){%>
                     <form class="form-books" action="/dashboard" method="post">
                         <div class="books-details">
-                            <%if(user.role === "admin"){%>
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><button type="submit" name="deleteButton" class="dropdown-item">Delete</button></li>
-                                        <input type="hidden" name="selectedBook" value="<%=foundBooks[i]._id%>">
-                                    </ul> 
-                                </div>
-                                <%}%>
                             <p class="text-capitalize"><%=foundBooks[i].title%></p>
                             <p class="text-capitalize"><%=foundBooks[i].author%></p>
                        <a href="/book/<%=foundBooks[i].title%>" class="issueBook">View</a>
