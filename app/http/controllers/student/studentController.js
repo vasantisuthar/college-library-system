@@ -12,6 +12,7 @@ function studentController(){
                     if(err){
                         console.log(err)
                     }else{
+                        if(foundBook){
                             Book.find({publisher:{$regex:foundBook.publisher, $options:"$i"}},(err, relatedBook) =>{
                                 if(err){
                                     console.log(err);
@@ -31,7 +32,8 @@ function studentController(){
                                     }
                                     
                                 }
-                        })
+                            })
+                        }
                     }
                 })
                 }
@@ -47,7 +49,7 @@ function studentController(){
             },
             issueBook(req, res){
                 const issueBookId = req.body.issueBookId;
-                Book.findById({_id:issueBookId},(err, foundBook) =>{
+                Book.findOne({$and:[{_id:issueBookId},{qty:{$gt:0}}]},(err, foundBook) =>{
                     if(!err){
                         if(foundBook){
                             Dashboard.countDocuments({studentId:req.user._id}).then((result) =>{
@@ -65,7 +67,9 @@ function studentController(){
                                                     if(err){
                                                         console.log(err)
                                                     }else{
-                                                        res.redirect('/dashboard')
+                                                        if(result){
+                                                                res.redirect('/dashboard')
+                                                        }
                                                     }
                                                 });
                                                 Student.findByIdAndUpdate({_id:req.user._id},{$set:{"activity":"issued"}},{upsert:true},(err, updated) =>{
@@ -88,6 +92,9 @@ function studentController(){
                                 console.log(err);
                                 res.redirect('/')
                             })     
+                        }else if(!foundBook){
+                            req.flash('issue',"Book is not available")
+                            return res.redirect('/')
                         }
                     }
                 })

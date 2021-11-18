@@ -8,7 +8,7 @@ function adminController(){
             res.render('admin/addBooks');
         },
         postBooks(req, res){
-            const {title, author, edition, published, isbn, publisher, qty,preview} = req.body;
+            const {title, author, edition, published, isbn, publisher, qty,totalBooks,preview} = req.body;
             const book = new Book({
             title,
             author,

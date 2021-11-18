@@ -7,7 +7,7 @@ function homeController(){
             session = req.session.passport.user
             if(session){
                 Student.findById(session,(err, student)=>{
-                    Book.find({}, (err, foundBooks) => {
+                    Book.find({"qty":{$gt : 0}}, (err, foundBooks) => {
                         if(!err){
                             if(student){
                                 studentName = student.name;
