@@ -75,13 +75,15 @@ function adminController(){
         getDetails(req, res){
             const enrollment = req.params.enrollment;
             Student.findOne({enrollment:enrollment, activity:"issued"},(err, found) =>{
-                    Dashboard.find({studentId: found._id},(err, foundDetails) =>{
+                if(found){
+                Dashboard.find({studentId: found._id},(err, foundDetails) =>{
                         if(err){
                             console.log(err)
                         }else{
-                            res.render('admin/details',{foundDetails: foundDetails, moment : moment})
+                            res.render('admin/details',{foundDetails: foundDetails,studentId:found._id, moment : moment})
                         }
                 })
+            }
                 
             })
         },
@@ -92,7 +94,25 @@ function adminController(){
                 res.redirect('dashboard/' + enroll);
             })
         }
-    }
+    },
+    returnBook(req, res){
+            const dashboardStudentId = req.body.studentId;
+            const bookIsbn = req.body.bookIsbn;
+
+            Dashboard.findOneAndDelete({isbn: bookIsbn},{studentId : dashboardStudentId},(err, result) =>{
+                if(result){
+                    Book.findOneAndUpdate({isbn:bookIsbn},{$inc:{qty:1}},(err, updated)=>{
+                            if(updated){
+                                res.redirect('/adminDashboard')
+                                console.log("return")
+                            }else{
+                                console.log(err);
+                            }
+                        
+                    })
+                }
+            })
+        }
     }
 }
 module.exports= adminController;

@@ -4,9 +4,10 @@
     <div class="container py-4">
 
         <%foundDetails.forEach((detail) =>{%>
-            <form action="/removeIssuedBook" method="post">
+            <form action="/returnIssuedBook" method="post">
                 <div class="p-3 rounded-3">
                     <div class="h-100 p-5 bg-light border rounded-3">
+                        <input type="hidden" name="studentId" value="<%=studentId%>">
                         <p class="col-md-8 fs-4"><%=detail.title%></p>
                         <p class="col-md-8 fs-5"><%=detail.author%></p>
                         <p class="col-md-8 fs-5"><%=detail.isbn%></p>
@@ -14,6 +15,7 @@
                         <p class="col-md-8 fs-5 fw-normal">Return Date : <span class="col-md-8 fs-5"><%=moment(detail.createdAt).add(7, 'days').format('DD-MM-YYYY')%></span></p>
                         <div class="row">
                             <div class="col col-lg-8 col-md-8">
+                                <input type="hidden" name="bookIsbn" value="<%=detail.isbn%>">
                                 <button type="submit" class="btn btn-primary">Returned</button>
                             </div>
                             <div class="col col-lg-3 col-md-8">

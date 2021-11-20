@@ -40,11 +40,15 @@ function studentController(){
             },
             getDashboard(req, res){
                 Dashboard.find({studentId: req.user._id},null,{sort: {'createdAt': -1}},(err, foundBook) =>{
-                    if(!err){
+                    Student.findOne({_id:req.user._id},(err, result)=>{
                         if(foundBook){
-                            res.render('student/dashboard',{foundBook: foundBook, moment : moment})
+                            if(result){
+                                res.render('student/dashboard',{foundBook: foundBook, moment : moment, result:result})
+                            }else{
+                                console.log(err)
+                            }
                         }
-                    }
+                    })
                 })
             },
             issueBook(req, res){

@@ -37,6 +37,7 @@ function initRoutes(app){
     app.get('/admindashboard',adminController().adminDashboard);
     app.get('/dashboard/:enrollment',admin, adminController().getDetails);
     app.post('/searchEnroll',adminController().searchEnroll);
+    app.post('/returnIssuedBook', adminController().returnBook);
 }
 
 module.exports = initRoutes;
