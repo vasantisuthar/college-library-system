@@ -5,6 +5,11 @@ const dashboardSchema = new mongoose.Schema({
         ref : 'Student',
         required : true
     },
+    bookId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Book',
+        required:true
+    },
     title  : {type:String , required: true},
     author : {type : String, required: true},
     isbn : {type :String, required: true}

@@ -53,11 +53,12 @@ function studentController(){
                     if(!err){
                         if(foundBook){
                             Dashboard.countDocuments({studentId:req.user._id}).then((result) =>{
-                                Dashboard.find({title:foundBook.title,studentId:req.user._id},(err, found) =>{
+                                Dashboard.find({bookId:foundBook._id,studentId:req.user._id},(err, found) =>{
                                     if(found.length == 0){
                                         if(result < 2){
                                             const dashboard = new Dashboard({
                                                 studentId : req.user._id,
+                                                bookId: foundBook._id,
                                                 title : foundBook.title,
                                                 author : foundBook.author,
                                                 isbn : foundBook.isbn
@@ -101,7 +102,7 @@ function studentController(){
             },
             removeIssuedBook(req, res){
                 const issuedBookIsbn = req.body.issuedBookIsbn;
-                Dashboard.deleteOne({isbn: issuedBookIsbn},(err, result) =>{
+                Dashboard.findOneAndDelete({isbn: issuedBookIsbn},(err, result) =>{
                     if(result){
                         Book.findOneAndUpdate({isbn : issuedBookIsbn},{$inc:{qty : 1}},(err, updated) =>{
                             if(!err){
@@ -112,6 +113,8 @@ function studentController(){
                                 console.log(err)
                             }
                         })
+                    }else{
+                        console.log(err)
                     }
                 })
             }
