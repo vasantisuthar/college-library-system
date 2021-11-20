@@ -101,6 +101,19 @@ function adminController(){
 
             Dashboard.findOneAndDelete({isbn: bookIsbn},{studentId : dashboardStudentId},(err, result) =>{
                 if(result){
+                    Dashboard.countDocuments({studentId:dashboardStudentId}).then(count =>{
+                        console.log(count)
+                        if(count == 0){
+                            Student.findOneAndUpdate({_id:dashboardStudentId},{$set:{activity:"returned"}},(err, returned) =>{
+                                if(returned){
+                                    console.log("returned")
+                                }else{
+                                    console.log(err)
+                                }
+                            })
+                        }
+                    })
+                    
                     Book.findOneAndUpdate({isbn:bookIsbn},{$inc:{qty:1}},(err, updated)=>{
                             if(updated){
                                 res.redirect('/adminDashboard')
