@@ -106,8 +106,21 @@ function studentController(){
             },
             removeIssuedBook(req, res){
                 const issuedBookIsbn = req.body.issuedBookIsbn;
-                Dashboard.findOneAndDelete({isbn: issuedBookIsbn},(err, result) =>{
+                Dashboard.findOneAndRemove({isbn: issuedBookIsbn},(err, result) =>{
                     if(result){
+                        Dashboard.countDocuments({studentId: req.user._id}).then((count) =>{
+                            if(count == 0){
+                                Student.findOneAndUpdate({_id:req.user._id},{$set:{activity:"returned"}},(err, returned) =>{
+                                    if(returned){
+                                        console.log("returned")
+                                    }else{
+                                        console.log(err)
+                                    }
+                                })
+                            }
+                        })
+                        
+
                         Book.findOneAndUpdate({isbn : issuedBookIsbn},{$inc:{qty : 1}},(err, updated) =>{
                             if(!err){
                                 if(updated){

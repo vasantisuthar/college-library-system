@@ -117,7 +117,6 @@ function adminController(){
                     Book.findOneAndUpdate({isbn:bookIsbn},{$inc:{qty:1}},(err, updated)=>{
                             if(updated){
                                 res.redirect('/adminDashboard')
-                                console.log("return")
                             }else{
                                 console.log(err);
                             }
