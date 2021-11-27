@@ -27,7 +27,7 @@ function initRoutes(app){
     app.post('/removeIssuedBook', studentController().removeIssuedBook);
 
     //book controller
-    app.get('/book/:title',auth,studentController().getBook);
+    app.get('/book/:id',auth,studentController().getBook);
 
     //admin routes
     app.get('/add',admin,adminController().addbooks);

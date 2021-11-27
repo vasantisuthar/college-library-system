@@ -6,9 +6,9 @@ const moment = require('moment');
 function studentController(){
     return{
         getBook(req, res){
-                const selectedTitle = req.params.title;
-                if(selectedTitle){
-                    Book.findOne({title:selectedTitle}, (err, foundBook) => {
+                const selectedId = req.params.id;
+                if(selectedId){
+                    Book.findOne({_id:selectedId}, (err, foundBook) => {
                     if(err){
                         console.log(err)
                     }else{
