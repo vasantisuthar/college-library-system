@@ -57,6 +57,7 @@ app.set('view engine','ejs')
 require('./routes/web')(app);
 
 app.use((req, res) => {
+    res.status(404).render('errors/error');
 })
 
 app.listen(3000, () => {

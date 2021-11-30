@@ -1,11 +1,14 @@
 <%- include('../partials/header') %>
 
-<div id="login-box">
+<div id="addBooks-box">
     <div class="left">
         <p>Add books</p>
         <%if(messages.error){%>
         <p class="error-msg"><%=messages.error%></p>
-    <%}%>
+        <%}%>
+        <%if(messages.success){%>
+            <p class="success-msg"><%=messages.success%></p>
+        <%}%>
         <form action="/add" method="post">
             <input type="text" name="title" placeholder="Book Title" required/>
             <input type="text" name="author" placeholder="Book Author" required/>

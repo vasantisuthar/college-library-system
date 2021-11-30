@@ -12,13 +12,15 @@
                 <p class="fw-normal fs-5">Edition : <span class="fw-lighter text-capitalize"><%=edition%></span></p>
                 <p class="fw-normal fs-5">ISBN : <span class="fw-lighter text-capitalize"><%=isbn%></span></p> 
                 <p class="fw-normal fs-5">Publisher : <span class="fw-lighter text-capitalize"><%=publisher%></span></p>
-                <p class="fw-normal fs-5">Published : <span class="fw-lighter text-capitalize"><%=published%></span></p>
+                <p class="fw-normal fs-5">Published : <span class="fw-lighter text-capitalize"><%=moment(published).format("DD-MM-YYYY")%></span></p>
                 <p class="fw-normal fs-5">No of books available: <span class="fw-lighter text-capitalize"><%=qty%></span></p>
                 <input type="hidden" name="issueBookId" value="<%=bookId%>">
                 <%if(user.role === "admin"){%>
                     <p class="fw-normal fs-5">Total Books : <span class="fw-lighter text-capitalize"><%=totalBooks%></span></p>
                 <%}%>
-                <button class="btn btn-secondary px-4" type="submit">Issue</button>
+                <%if(user.role === "Student"){%>
+                    <button class="btn btn-secondary px-4" type="submit">Issue</button>
+                <%}%>
             </form>
         </div>
         </div>
@@ -38,7 +40,7 @@
                 <div class="books-details">
                         <p class="text-capitalize"><%=book.title%></p>
                         <p class="text-capitalize"><%=book.author%></p>
-                        <a href="/book/<%=book.title%>" class="issueBook">View</a>
+                        <a href="/book/<%=book._id%>" class="issueBook">View</a>
                     </div>
                 </form>
                 <%}%>

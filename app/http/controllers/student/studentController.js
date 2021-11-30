@@ -28,6 +28,7 @@ function studentController(){
                                         qty:foundBook.qty,
                                         bookId:foundBook._id,
                                         totalBooks:foundBook.totalBooks,
+                                        moment:moment,
                                         relatedBook: relatedBook})
                                     }
                                     

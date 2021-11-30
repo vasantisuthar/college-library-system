@@ -9,25 +9,33 @@ function adminController(){
         },
         postBooks(req, res){
             const {title, author, edition, published, isbn, publisher, qty,totalBooks,preview} = req.body;
-            const book = new Book({
-            title,
-            author,
-            edition,
-            published,
-            isbn,
-            publisher,
-            qty,
-            totalBooks,
-            preview
+            Book.findOne({isbn:isbn},(err, found) =>{
+                if(found){
+                    req.flash('error',"Book already exists with the ISBN number");
+                    return res.redirect('/add');
+                }else{
+                    const book = new Book({
+                        title,
+                        author,
+                        edition,
+                        published,
+                        isbn,
+                        publisher,
+                        qty,
+                        totalBooks,
+                        preview
+                        })
+                        book.save().then((book) =>{
+                            req.flash('success',"Book is added successfully");
+                            return res.redirect('/add')
+                        })
+                        .catch(err =>{
+                            req.flash('error',"something went wrong")
+                            return res.redirect('/add');
+                        })
+                }
             })
-            book.save().then((book) =>{
-                req.flash('success',"Book is added successfully");
-                return res.redirect('/')
-            })
-            .catch(err =>{
-                req.flash('error',"something went wrong")
-                return res.redirect('/add');
-            })
+            
         },
         register(req, res){
             res.render('auth/register');

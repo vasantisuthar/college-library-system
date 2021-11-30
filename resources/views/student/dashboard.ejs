@@ -16,7 +16,7 @@
               <p class="col-md-8 fs-4">ISBN : <span class="col-md-8 fs-4"><%=book.isbn%></span></p>
               <p class="col-md-8 fs-3 fw-normal">Issue Date : <span class="col-md-8 fs-5"><%=moment(book.createdAt).format('DD-MM-YYYY')%></span></p>
               <p class="col-md-8 fs-3 fw-normal">Return Date : <span class="col-md-8 fs-5"><%=moment(book.createdAt).add(7, 'days').format('DD-MM-YYYY')%></span></p>
-              <a href="/book/<%=book.title%>">
+              <a href="/book/<%=book.bookId%>">
                 <button class="btn btn-outline-info px-4" type="button">View</button>
               </a>
               <input type="hidden" name="issuedBookIsbn" value="<%=book.isbn%>">

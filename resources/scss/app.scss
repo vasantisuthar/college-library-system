@@ -187,18 +187,18 @@ body {
   font-weight: 300;
 }
 
-#login-box {
+#addBooks-box {
   display:flex;
   align-items: center;
   justify-content: center;
   position: relative;
   margin: 5% auto;
   width: 50%;
-  height:470px;
+  height:550px;
   background: #FFF;
   border-radius: 2px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-    p{
+    p:first-child{
         font-family:'Barlow', sans-serif;
         font-size: 2rem;
         color:rgb(73, 72, 72);

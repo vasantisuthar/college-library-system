@@ -174,24 +174,24 @@ body {
   font-weight: 300;
 }
 
-#login-box {
+#addBooks-box {
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   margin: 5% auto;
   width: 50%;
-  height: 470px;
+  height: 550px;
   background: #FFF;
   border-radius: 2px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
-#login-box p {
+#addBooks-box p:first-child {
   font-family: "Barlow", sans-serif;
   font-size: 2rem;
   color: #494848;
 }
-#login-box input[type=text] {
+#addBooks-box input[type=text] {
   margin-bottom: 20px;
   padding: 4px;
   width: 100%;
@@ -203,10 +203,10 @@ body {
   font-size: 15px;
   transition: 0.2s ease;
 }
-#login-box input[type=file] {
+#addBooks-box input[type=file] {
   width: 100%;
 }
-#login-box input[type=text]:focus {
+#addBooks-box input[type=text]:focus {
   border-bottom: 2px solid #16a085;
   color: #16a085;
   transition: 0.2s ease;
