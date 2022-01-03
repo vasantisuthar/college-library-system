@@ -12,7 +12,8 @@ const dashboardSchema = new mongoose.Schema({
     },
     title  : {type:String , required: true},
     author : {type : String, required: true},
-    isbn : {type :String, required: true}
+    isbn   : {type :String, required: true},
+    charge: {type:Number, required:false}
 },{timestamps: true})
 
 module.exports = mongoose.model('Dashboard',dashboardSchema);

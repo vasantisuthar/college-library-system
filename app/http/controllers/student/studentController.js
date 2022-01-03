@@ -1,6 +1,7 @@
 const Student = require('../../../models/student');
 const Book = require('../../../models/books');
 const Dashboard = require('../../../models/dashboard');
+const getPenalty = require('../../../config/penalty.js')
 const moment = require('moment');
 
 function studentController(){
@@ -44,13 +45,30 @@ function studentController(){
                     Student.findOne({_id:req.user._id},(err, result)=>{
                         if(foundBook){
                             if(result){
-                                res.render('student/dashboard',{foundBook: foundBook, moment : moment, result:result})
+                                
+                                const charges = getPenalty(foundBook)
+                                const returnDate = charges[0];
+                                const obj = charges[1];
+
+                                if(moment().isAfter(returnDate)){
+                                    obj.forEach(async (singleObj) => {
+                                        const updated = await Dashboard.findByIdAndUpdate({_id:singleObj.id},{$set:{"charge":singleObj.charge}},{upsert:true})
+                                            if(updated){
+                                                console.log("updated");
+                                            }else{
+                                                console.log(err)
+                                            }
+                                        });
+                                }
+                                    res.render('student/dashboard',{foundBook: foundBook, moment : moment, returnDate : returnDate, result:result})
+                                }
                             }else{
                                 console.log(err)
                             }
                         }
+                    )
                     })
-                })
+                
             },
             issueBook(req, res){
                 const issueBookId = req.body.issueBookId;
@@ -68,27 +86,28 @@ function studentController(){
                                                 author : foundBook.author,
                                                 isbn : foundBook.isbn
                                             })
-                                            dashboard.save().then(() =>{
+                                                dashboard.save().then(() =>{
                                                 Book.findOneAndUpdate({_id : issueBookId},{$inc:{qty : -1}},(err, result) =>{
                                                     if(err){
                                                         console.log(err)
                                                     }else{
                                                         if(result){
-                                                                res.redirect('/dashboard')
+                                                            res.redirect('/dashboard')
                                                         }
                                                     }
                                                 });
                                                 Student.findByIdAndUpdate({_id:req.user._id},{$set:{"activity":"issued"}},{upsert:true},(err, updated) =>{
-                                                    console.log(updated);
+                                                    console.log("updated");
                                                 });
+                                                
                                             }).catch(err =>{
                                                 console.log(err);
                                                 res.redirect('/')
                                             })
                                         }else{
-                                            req.flash('issue',"Students can issue only two books")
-                                            return res.redirect('/')
+                                            console.log("not found")
                                         }
+                                        
                                     }else{
                                         req.flash('issue',"Book is already issued");
                                         return res.redirect('/')
@@ -106,6 +125,7 @@ function studentController(){
                 })
             },
             removeIssuedBook(req, res){
+                if(req.body.hasOwnProperty('removeBtn')){
                 const issuedBookIsbn = req.body.issuedBookIsbn;
                 Dashboard.findOneAndRemove({isbn: issuedBookIsbn},(err, result) =>{
                     if(result){
@@ -136,6 +156,7 @@ function studentController(){
                     }
                 })
             }
+        }
         }
     }
 module.exports = studentController;

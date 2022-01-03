@@ -41,8 +41,8 @@ function adminController(){
             res.render('auth/register');
         },
         registerStudent(req, res){
-            const{name, enrollment, standard} = req.body;
-            if(!enrollment || !name || !standard){
+            const{name, email, enrollment, standard} = req.body;
+            if(!email || !enrollment || !name || !standard){
                 req.flash('error',"All fields are required");
                 return res.redirect('/register');
             }
@@ -58,7 +58,8 @@ function adminController(){
             const student = new Student({
                 name,
                 enrollment,
-                standard
+                standard,
+                email
             })
 
             student.save().then((student) =>{

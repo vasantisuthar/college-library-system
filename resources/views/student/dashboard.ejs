@@ -8,19 +8,31 @@
     <%if(result.activity == "issued"){%>
 
     <%foundBook.forEach((book) =>{%>
-        <form action="/removeIssuedBook" method="post">
+      <form action="/removeIssuedBook" method="post">
           <div class="p-5 mb-4 bg-light rounded-3">
             <div class="container-fluid py-5">
               <h4 class="display-6 fw-normal"><%=book.title%></h4>
               <p class="col-md-8 fs-4"><%=book.author%></p>
               <p class="col-md-8 fs-4">ISBN : <span class="col-md-8 fs-4"><%=book.isbn%></span></p>
-              <p class="col-md-8 fs-3 fw-normal">Issue Date : <span class="col-md-8 fs-5"><%=moment(book.createdAt).format('DD-MM-YYYY')%></span></p>
-              <p class="col-md-8 fs-3 fw-normal">Return Date : <span class="col-md-8 fs-5"><%=moment(book.createdAt).add(7, 'days').format('DD-MM-YYYY')%></span></p>
-              <a href="/book/<%=book.bookId%>">
-                <button class="btn btn-outline-info px-4" type="button">View</button>
-              </a>
-              <input type="hidden" name="issuedBookIsbn" value="<%=book.isbn%>">
-              <button class="btn btn-outline-danger px-4" type="submit">Remove</button>
+              <p class="col-md-8 fs-4 fw-normal">Issue Date : <span class="col-md-8 fs-5" id="issue-date"><%=moment(book.createdAt).format('DD/MM/YYYY')%></span></p>
+              <p class="col-md-8 fs-4 fw-normal">Return Date : <span class="col-md-8 fs-5" id="return-date"><%=moment(book.createdAt).add(7, 'days').format('DD/MM/YYYY')%></span></p>
+              <div class="row">
+                <div class="col col-lg-8 col-md-8">
+                  <a href="/book/<%=book.bookId%>">
+                    <button class="btn btn-outline-info px-4" type="button">View</button>
+                  </a>
+                  <input type="hidden" name="issuedBookIsbn" value="<%=book.isbn%>">
+                  <button class="btn btn-outline-danger px-4" name="removeBtn" type="submit">Remove</button>
+                </div>
+                
+                <%if(moment().isAfter(returnDate)){%>
+                <div class="col col-lg-4 col-md-8">
+                    <p class="col-md-8 fs-4 text-danger" id="penalty">Charge:<span class="px-3">&#8377;<%=book.charge%></span></p>
+                    <button class="btn btn-primary">Pay</button>
+                </div>
+              <%}%>
+
+              </div>
             </div>
           </div>
         </form>

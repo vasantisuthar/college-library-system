@@ -20,6 +20,9 @@
                             </div>
                             <div class="col col-lg-3 col-md-8">
                                 <p class="col-md-8 fs-4 text-danger">Pending</p>
+                                <%if(detail.charge){%>
+                                    <p class="fs-5 text-danger">Charge : <span>&#8377;<%=detail.charge%></span></p>
+                                <%}%>
                             </div>
                         </div>
                         
