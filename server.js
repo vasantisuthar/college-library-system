@@ -1,4 +1,5 @@
 //require modules
+require('dotenv').config();
 const express = require('express');
 const ejs = require('ejs');
 const expressLayout = require('express-ejs-layouts');

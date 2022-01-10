@@ -41,13 +41,13 @@ function studentController(){
                 }
             },
             getDashboard(req, res){
-                Dashboard.find({studentId: req.user._id},null,{sort: {'createdAt': -1}},(err, foundBook) =>{
-                    Student.findOne({_id:req.user._id},(err, result)=>{
+                console.log(req.user._id)
+                Dashboard.find({studentId: req.user._id},null,{sort: {'createdAt': -1}}, (err, foundBook) =>{
+                    Student.findOne({_id:req.user._id},async (err, result)=>{
                         if(foundBook){
                             if(result){
-                                
-                                const charges = getPenalty(foundBook)
-                                const returnDate = charges[0];
+                                const charges = getPenalty(foundBook);
+                                const returnDate =  charges[0];
                                 const obj = charges[1];
 
                                 if(moment().isAfter(returnDate)){
@@ -60,7 +60,7 @@ function studentController(){
                                             }
                                         });
                                 }
-                                    res.render('student/dashboard',{foundBook: foundBook, moment : moment, returnDate : returnDate, result:result})
+                                   await res.render('student/dashboard',{foundBook: foundBook, moment : moment, returnDate : returnDate, result:result})
                                 }
                             }else{
                                 console.log(err)
