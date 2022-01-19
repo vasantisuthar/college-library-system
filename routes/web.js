@@ -32,9 +32,9 @@ function initRoutes(app){
     app.post('/removeIssuedBook', studentController().removeIssuedBook);
 
     // payment routes
-    app.get('/payment/index',auth,PaymentController().index);
-    app.post("/paynow", [parseUrl, parseJson],PaymentController().postRequestForPayment);
-    app.post("/callback",PaymentController().verifyPayment);
+    // app.get('/payment/index',auth,PaymentController().index);
+    app.post("/payment", PaymentController().postRequestForPayment);
+    // app.post("/callback",PaymentController().verifyPayment);
 
     //book controller
     app.get('/book/:id',auth,studentController().getBook);

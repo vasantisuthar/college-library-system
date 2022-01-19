@@ -41,6 +41,7 @@ function studentController(){
                 }
             },
             getDashboard(req, res){
+                const publishable_key = process.env.publishable_key;
                 console.log(req.user._id)
                 Dashboard.find({studentId: req.user._id},null,{sort: {'createdAt': -1}}, (err, foundBook) =>{
                     Student.findOne({_id:req.user._id},async (err, result)=>{
@@ -60,7 +61,7 @@ function studentController(){
                                             }
                                         });
                                 }
-                                   await res.render('student/dashboard',{foundBook: foundBook, moment : moment, returnDate : returnDate, result:result})
+                                    await res.render('student/dashboard',{foundBook: foundBook, moment : moment, returnDate : returnDate, result:result, key : publishable_key})
                                 }
                             }else{
                                 console.log(err)

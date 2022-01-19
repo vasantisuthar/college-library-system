@@ -9,6 +9,7 @@ const flash = require("express-flash");
 const session  = require('express-session');
 const MongoStore = require('connect-mongo');
 const passport = require("passport");
+const stripe = require('stripe')(process.env.secret_key);
 const app = express();
 
 

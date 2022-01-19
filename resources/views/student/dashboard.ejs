@@ -28,8 +28,21 @@
                 <%if(moment().isAfter(returnDate)){%>
                 <div class="col col-lg-4 col-md-8">
                     <p class="col-md-8 fs-4 text-danger" id="penalty">Charge:<span class="px-3">&#8377;<%=book.charge%></span></p>
-                    <a href="/payment/index"><button type="button" class="btn btn-primary">Pay</button></a>
-                </div>
+                    <%if(book.charge > 0){%>
+                      <form action="payment" method="POST">
+                        <script 
+                            src="//checkout.stripe.com/v2/checkout.js"
+                            class="stripe-button"
+                            data-key="<%= key %>"
+                            data-amount="<%=book.charge * 100%>"
+                            data-currency="inr" 
+                            data-name="SRKI",
+                            data-description="Charge for the late submission"
+                            data-locale="auto" >
+                        </script>
+                    </form>
+                  <%}%>
+                  </div>
               <%}%>
 
               </div>

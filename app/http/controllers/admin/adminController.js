@@ -2,6 +2,7 @@ const Book = require('../../../models/books');
 const Dashboard = require('../../../models/dashboard');
 const Student = require('../../../models/student');
 const moment = require('moment')
+const nodemailer = require('nodemailer');
 function adminController(){
     return{
         addbooks(req, res){
@@ -63,15 +64,36 @@ function adminController(){
             })
 
             student.save().then((student) =>{
-                req.flash('success',"Student added successfully");
+                req.flash('success',"Student registered successfully");
+                var userEmail = 'yourUserName@gmail.com';
+                var userPassword = 'yourPassword';
+
+                var transporter = nodemailer.createTransport(`smtps://${userEmail}:${userPassword}@smtp.gmail.com`);
+
+
+                // setup e-mail data with unicode symbols
+                var mailOptions = {
+                    from: userEmail,    // sender address
+                    to: email, // list of receivers
+                    subject: 'Registration to e-library', // Subject line
+                    text: 'You are successfully registered for e-library',       // plaintext body
+                    html: '<p>Login with this enrollment</p><b>{enrollment}</b>' // html body
+                };
+
+                // send mail with defined transport object
+                transporter.sendMail(mailOptions, function(error, info){
+                    if(error){
+                        return console.log(error);
+                    }
+                    console.log('Message sent: ' + info.response);
+                });
                 return res.redirect('/register');
-            }).catch(err => {
-                req.flash('error',"Something went wrong")
-                console.log(err);
-                return res.redirect('/register')
-            });
-            
-        },
+                }).catch(err => {
+                    req.flash('error',"Something went wrong")
+                    console.log(err);
+                    return res.redirect('/register')
+                });
+            },
         adminDashboard(req, res){
             Student.find({activity: "issued"},(err, foundStudent) =>{
                 if(foundStudent){
