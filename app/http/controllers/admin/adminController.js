@@ -1,8 +1,9 @@
 const Book = require('../../../models/books');
 const Dashboard = require('../../../models/dashboard');
 const Student = require('../../../models/student');
-const moment = require('moment')
 const nodemailer = require('nodemailer');
+
+const moment = require('moment')
 function adminController(){
     return{
         addbooks(req, res){
@@ -65,11 +66,20 @@ function adminController(){
 
             student.save().then((student) =>{
                 req.flash('success',"Student registered successfully");
-                var userEmail = 'yourUserName@gmail.com';
-                var userPassword = 'yourPassword';
+                var userEmail = process.env.email_id;
+                var userPassword = process.env.user_password;
 
-                var transporter = nodemailer.createTransport(`smtps://${userEmail}:${userPassword}@smtp.gmail.com`);
-
+               
+                var transporter = nodemailer.createTransport({
+                    host: "smtp.gmail.com",
+                    port: 587,                    
+                    auth: {
+                      user: userEmail,
+                      pass: userPassword
+                    },
+                    
+                  });
+                  
 
                 // setup e-mail data with unicode symbols
                 var mailOptions = {
@@ -84,7 +94,10 @@ function adminController(){
                 transporter.sendMail(mailOptions, function(error, info){
                     if(error){
                         return console.log(error);
+                    }else{
+                        console.log("mail send")
                     }
+                    
                     console.log('Message sent: ' + info.response);
                 });
                 return res.redirect('/register');
