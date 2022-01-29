@@ -12,6 +12,7 @@ const guest = require('../app/http/middlewares/guest');
 const admin = require('../app/http/middlewares/admin');
 const student = require('../app/http/middlewares/student');
 const PaymentController = require('../app/http/controllers/student/paymentController');
+const newsController = require("../app/http/controllers/newsController");
 
 // const bookController = require('../app/http/controllers/bookController');
 function initRoutes(app){
@@ -32,13 +33,13 @@ function initRoutes(app){
     app.post('/removeIssuedBook', studentController().removeIssuedBook);
 
     // payment routes
-    // app.get('/payment/index',auth,PaymentController().index);
     app.post("/payment", PaymentController().postRequestForPayment);
-    // app.post("/callback",PaymentController().verifyPayment);
 
     //book controller
     app.get('/book/:id',auth,studentController().getBook);
-
+    
+    // news 
+    app.get('/news',auth, newsController().getNews);
     //admin routes
     app.get('/add',admin,adminController().addbooks);
     app.post('/add',adminController().postBooks);

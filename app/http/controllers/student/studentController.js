@@ -42,7 +42,6 @@ function studentController(){
             },
             getDashboard(req, res){
                 const publishable_key = process.env.publishable_key;
-                console.log(req.user._id)
                 Dashboard.find({studentId: req.user._id},null,{sort: {'createdAt': -1}}, (err, foundBook) =>{
                     Student.findOne({_id:req.user._id},async (err, result)=>{
                         if(foundBook){
@@ -52,16 +51,17 @@ function studentController(){
                                 const obj = charges[1];
 
                                 if(moment().isAfter(returnDate)){
+                                    var done = false;
                                     obj.forEach(async (singleObj) => {
                                         const updated = await Dashboard.findByIdAndUpdate({_id:singleObj.id},{$set:{"charge":singleObj.charge}},{upsert:true})
                                             if(updated){
-                                                console.log("updated");
+                                                done = true;
                                             }else{
                                                 console.log(err)
                                             }
                                         });
                                 }
-                                    await res.render('student/dashboard',{foundBook: foundBook, moment : moment, returnDate : returnDate, result:result, key : publishable_key})
+                                    await res.render('student/dashboard',{foundBook: foundBook, moment : moment, returnDate : returnDate, result:result, key : publishable_key, done:done})
                                 }
                             }else{
                                 console.log(err)
@@ -98,7 +98,7 @@ function studentController(){
                                                     }
                                                 });
                                                 Student.findByIdAndUpdate({_id:req.user._id},{$set:{"activity":"issued"}},{upsert:true},(err, updated) =>{
-                                                    console.log("updated");
+                                                    res.send("success")
                                                 });
                                                 
                                             }).catch(err =>{
@@ -106,7 +106,8 @@ function studentController(){
                                                 res.redirect('/')
                                             })
                                         }else{
-                                            console.log("not found")
+                                            req.flash('issue',"Student can issue only two books")
+                                            return res.redirect('/');
                                         }
                                         
                                     }else{
@@ -126,21 +127,28 @@ function studentController(){
                 })
             },
             removeIssuedBook(req, res){
-                if(req.body.hasOwnProperty('removeBtn')){
-                const issuedBookIsbn = req.body.issuedBookIsbn;
-                Dashboard.findOneAndRemove({isbn: issuedBookIsbn},(err, result) =>{
-                    if(result){
-                        Dashboard.countDocuments({studentId: req.user._id}).then((count) =>{
-                            if(count == 0){
-                                Student.findOneAndUpdate({_id:req.user._id},{$set:{activity:"returned"}},(err, returned) =>{
-                                    if(returned){
-                                        console.log("returned")
-                                    }else{
-                                        console.log(err)
-                                    }
-                                })
-                            }
-                        })
+                
+                const buttonValue = req.body.removeBtn;
+                const stripeBtn = req.body.paymentBtn;
+                
+                console.log(buttonValue);
+                
+                if(buttonValue){
+                    const issuedBookIsbn = req.body.issuedBookIsbn;
+                    Dashboard.findOneAndRemove({isbn: issuedBookIsbn},(err, result) =>{
+                        if(result){
+                            Dashboard.countDocuments({studentId: req.user._id}).then((count) =>{
+                                if(count == 0){
+                                    Student.findOneAndUpdate({_id:req.user._id},{$set:{activity:"returned"}},(err, returned) =>{
+                                        if(returned){
+                                            console.log("returned")
+                                            res.redirect('/');
+                                        }else{
+                                            console.log(err)
+                                        }
+                                    })
+                                }
+                            })
                         
 
                         Book.findOneAndUpdate({isbn : issuedBookIsbn},{$inc:{qty : 1}},(err, updated) =>{
@@ -156,6 +164,38 @@ function studentController(){
                         console.log(err)
                     }
                 })
+            }
+
+            if(stripeBtn){
+                console.log("from post request for payment")
+                stripe.customers.create({
+                email: req.body.stripeEmail,
+                source: req.body.stripeToken,
+                })
+                .then((customer) => {
+                res.redirect('/');
+                    return stripe.charges.create({
+                    currency: 'INR',
+                    customer: customer.id
+                });
+            })
+            .then((charge) => {
+              // student paid charge  
+                console.log(charge)
+              // Dashboard.findByIdAndUpdate({_id:singleObj.id},{$set:{"charge":null}},{upsert:true},(err, done)=>{
+              //   if(done){
+              //     console.log("updated charge to null");
+              //     res.redirect('/');
+              //   }else{
+              //     console.log(err)
+              //   }
+              // })
+  
+                // If no error occurs
+            })
+            .catch((err) => {
+              res.send(err)       // If some error occurs
+            });
             }
         }
         }

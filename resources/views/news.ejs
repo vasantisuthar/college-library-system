@@ -1,0 +1,14 @@
+<%- include('partials/header') %>
+<%- include('partials/bootstrapHeader') %>
+
+<div id = "container">
+    <%responses.forEach((response) =>{%>
+        <div class="news-container">
+                <h1 class = "title"><%=response.name%></h1> 
+          <p class ="content"><%=response.description.substring(0,70)%><a href="<%=response.url%>"> read more</a></p>
+        </div>
+    <%})%>
+    
+   
+</div>
+<%- include('partials/footer') %>

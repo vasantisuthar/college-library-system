@@ -2,7 +2,7 @@
 <%- include('../partials/bootstrapHeader') %>
 
 
-    
+
 <main>
   <div class="container py-4">
     <%if(result.activity == "issued"){%>
@@ -18,18 +18,23 @@
               <p class="col-md-8 fs-4 fw-normal">Return Date : <span class="col-md-8 fs-5" id="return-date"><%=moment(book.createdAt).add(7, 'days').format('DD/MM/YYYY')%></span></p>
               <div class="row">
                 <div class="col col-lg-8 col-md-8">
+                  <!-- view button -->
                   <a href="/book/<%=book.bookId%>">
                     <button class="btn btn-outline-info px-4" type="button">View</button>
                   </a>
+
                   <input type="hidden" name="issuedBookIsbn" value="<%=book.isbn%>">
-                  <button class="btn btn-outline-danger px-4" name="removeBtn" type="submit">Remove</button>
+                  <!-- remove button -->
+                  <button class="btn btn-outline-danger px-4" name="removeBtn" value="remove" type="submit">Remove</button>
                 </div>
                 
-                <%if(moment().isAfter(returnDate)){%>
+                <%if(moment().isAfter(returnDate) && !done){%>
+                  <!-- book charge -->
                 <div class="col col-lg-4 col-md-8">
                     <p class="col-md-8 fs-4 text-danger" id="penalty">Charge:<span class="px-3">&#8377;<%=book.charge%></span></p>
+                    <!-- payment button -->
                     <%if(book.charge > 0){%>
-                      <form action="payment" method="POST">
+                      <button type="submit" name="paymentBtn" value="stripePayment">
                         <script 
                             src="//checkout.stripe.com/v2/checkout.js"
                             class="stripe-button"
@@ -40,7 +45,8 @@
                             data-description="Charge for the late submission"
                             data-locale="auto" >
                         </script>
-                    </form>
+                      </button>
+                        
                   <%}%>
                   </div>
               <%}%>

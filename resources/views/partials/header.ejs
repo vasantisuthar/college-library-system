@@ -36,17 +36,18 @@
                 <a href="/">Library</a>
             </div>
             <div class="nav-list">
+                <a href="/news">Hacker News</a>
                 <%if(user.role === 'Student'){%>
                     <a href="/dashboard">Dashboard</a>
-
                 <%}else if(user.role === 'admin'){%>
                     <a href="/add">Add Books</a>
                 <%}%>
-
+                
                 <a href="/logout">logout</a>
             </div>
         </div>
     </div>
+
 
 <form action="/search" method="post">
     <div class="nav-scroller bg-body shadow-sm">
@@ -54,6 +55,7 @@
             <%if(user.role == "admin"){%>
                 <a class="nav-link active fs-6" aria-current="page" href="/adminDashboard">Dashboard</a>
             <%}%>
+
         <%if(user.role == "Student"){%>
             <a class="nav-link fs-6" href="#">
                 Categories
@@ -64,7 +66,6 @@
                 Register Student
             </a>
         <%}%>
-
         <button type="submit" name="navLink" value = "Software"  class="nav-link fs-6">Software</button>
         <button type="submit" name="navLink" value = "Web"       class="nav-link fs-6">Web</button>
         <button type="submit" name="navLink" value = "Android"   class="nav-link fs-6">Android</button>

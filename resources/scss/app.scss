@@ -381,3 +381,36 @@ input[type="submit"]:active {
     }
 }
 
+#container{
+    margin:4%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.news-container{
+    
+    border : 3px solid white;
+    background-color:rgb(245, 244, 244);
+    border-radius: 9px;
+    width: 250px;
+    outline: none;
+    text-decoration: none;
+    text-align: center;
+    height: auto;
+    padding:3%;
+}
+.title{
+    text-decoration: none;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+.title, .content{
+    color: black;
+}
+
+.show{
+    display: block;
+    font-size: 1rem;
+}
