@@ -10,15 +10,28 @@ const session  = require('express-session');
 const MongoStore = require('connect-mongo');
 const passport = require("passport");
 const stripe = require('stripe')(process.env.secret_key);
+
 const app = express();
 
 
 //database connection
-mongoose.connect('mongodb://localhost:27017/Library')
-const connection = mongoose.connection;
-connection.once('open',() => {
-    console.log("database connected");
-})
+// let gfs;
+// mongoose.connect('mongodb://localhost:27017/Library')
+// const connection = mongoose.connection;
+// connection.once('open',() => {
+//     gfs = new mongoose.mongo.GridFSBucket(connection.db, {
+//         bucketName: 'uploads',
+//     });
+//     console.log("database connected");
+// })
+
+// connection
+const connection = require('./app/config/connection');
+connection(mongoose)
+
+// Storage
+
+
 
 //session config
 app.use(session({

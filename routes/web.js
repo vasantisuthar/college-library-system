@@ -1,3 +1,35 @@
+const multer = require('multer');
+const {GridFsStorage} = require('multer-gridfs-storage');
+const crypto = require('crypto')
+const path = require('path');
+
+
+const storage = new GridFsStorage({
+    url: 'mongodb://localhost:27017/Library',
+    file: (req, file) => {
+        return new Promise((resolve, reject) => {
+        crypto.randomBytes(16, (err, buf) => {
+            if (err) {
+                return reject(err);
+            }
+            const filename = buf.toString("hex") + path.extname(file.originalname);
+            const fileInfo = {
+                filename: filename,
+                bucketName: "uploads"
+            };
+            resolve(fileInfo);
+        });
+        });
+    }
+    });
+
+    const upload = multer({
+        storage
+    });
+
+
+
+
 const express = require("express");
 const parseUrl = express.urlencoded({ extended: false });
 const parseJson = express.json({ extended: false });
@@ -13,6 +45,7 @@ const admin = require('../app/http/middlewares/admin');
 const student = require('../app/http/middlewares/student');
 const PaymentController = require('../app/http/controllers/student/paymentController');
 const newsController = require("../app/http/controllers/newsController");
+const resourcesController = require("../app/http/controllers/e-resources/resourcesController");
 
 // const bookController = require('../app/http/controllers/bookController');
 function initRoutes(app){
@@ -50,6 +83,11 @@ function initRoutes(app){
     app.post('/searchEnroll',adminController().searchEnroll);
     app.post('/returnIssuedBook', adminController().returnBook);
 
+    //e-resources
+    app.get('/resources', resourcesController().getResource);
+    app.get('/files/:filname', resourcesController().getFileName);
+    app.get('/images/:filename', resourcesController().getImage);
+    app.post('/upload',upload.single('file'),resourcesController().upload);
     
 }
 
