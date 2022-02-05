@@ -6,13 +6,12 @@ const newsController = () => {
             const newsapi = new NewsAPI(process.env.news_api_key);
             // To query /v2/top-headlines
             // All options passed to topHeadlines are optional, but you need to include at least one of them
-            newsapi.v2.sources({
+            newsapi.v2.topHeadlines({
                 category: 'technology',
                 language: 'en',
-                country: 'us'
+                country: 'in'
               }).then(response => {
-                console.log(response);
-                res.render('news',{responses:response.sources})
+                res.render('news',{responses:response.articles})
                 /*
                   {
                     status: "ok",

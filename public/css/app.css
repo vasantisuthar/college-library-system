@@ -370,21 +370,9 @@ input[type=submit]:active {
   justify-content: center;
 }
 
-.news-container {
-  border: 3px solid white;
-  background-color: #f5f4f4;
-  border-radius: 9px;
-  width: 250px;
-  outline: none;
-  text-decoration: none;
-  text-align: center;
-  height: auto;
-  padding: 3%;
-}
-
 .title {
   text-decoration: none;
-  font-size: 1.3rem;
+  font-size: 12px;
   font-weight: 600;
 }
 
