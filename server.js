@@ -9,30 +9,29 @@ const flash = require("express-flash");
 const session  = require('express-session');
 const MongoStore = require('connect-mongo');
 const passport = require("passport");
+const methodOverride = require('method-override');
+
+// const {init}  = require('./app/config/connection')
 const stripe = require('stripe')(process.env.secret_key);
 
 const app = express();
 
 
-//database connection
-// let gfs;
-// mongoose.connect('mongodb://localhost:27017/Library')
-// const connection = mongoose.connection;
-// connection.once('open',() => {
-//     gfs = new mongoose.mongo.GridFSBucket(connection.db, {
-//         bucketName: 'uploads',
-//     });
-//     console.log("database connected");
-// })
+// database connection
+
+mongoose.connect('mongodb://localhost:27017/Library')
+const connection = mongoose.connection;
+connection.once('open',() => {
+    console.log("database connected");
+})
 
 // connection
-const connection = require('./app/config/connection');
-connection(mongoose)
+// init(mongoose)
 
 // Storage
 
 
-
+app.use(methodOverride('_method'));
 //session config
 app.use(session({
     secret:"Mysecretcode",

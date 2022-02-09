@@ -12,7 +12,7 @@ const storage = new GridFsStorage({
             if (err) {
                 return reject(err);
             }
-            const filename = buf.toString("hex") + path.extname(file.originalname);
+            const filename = file.originalname;
             const fileInfo = {
                 filename: filename,
                 bucketName: "uploads"
@@ -31,8 +31,7 @@ const storage = new GridFsStorage({
 
 
 const express = require("express");
-const parseUrl = express.urlencoded({ extended: false });
-const parseJson = express.json({ extended: false });
+
 
 const authController = require('../app/http/controllers/authController');
 const homeController = require('../app/http/controllers/homeController');
@@ -85,9 +84,11 @@ function initRoutes(app){
 
     //e-resources
     app.get('/resources', resourcesController().getResource);
-    app.get('/files/:filname', resourcesController().getFileName);
-    app.get('/images/:filename', resourcesController().getImage);
-    app.post('/upload',upload.single('file'),resourcesController().upload);
+    app.get('/files', resourcesController().getFiles);
+    app.get('/files/:filename', resourcesController().getFileName);
+    app.get('/image/:filename', resourcesController().getImageName);
+    app.post('/upload',upload.single('file'),resourcesController().uploadResource);
+    app.post('/files/:id',resourcesController().deleteResource);
     
 }
 
