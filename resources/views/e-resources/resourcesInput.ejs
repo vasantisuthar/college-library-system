@@ -4,57 +4,60 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
+  <!-- <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-    crossorigin="anonymous">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.2.228/pdf.min.js"></script>
-  <style>
+ 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.2.228/pdf.min.js"></script> -->
+  <!-- <style>
     img {
       width: 100%;
     }
-  </style>
-  <title>Mongo File Uploads</title>
+  </style> -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+  crossorigin="anonymous">
 </head>
 
 <body>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 m-auto">
+  <div class="resource-container mt-4">
+      <div class="col-md-3 m-auto">
         <form action="/upload" method="POST" enctype="multipart/form-data">
           <div class="custom-file mb-3">
-
             <input type="file" name="file" id="file" class="custom-file-input">
-            <!-- <input type="text" name="file-name" placeholder="enter name" required> -->
-
             <label for="file" class="custom-file-label">Choose File</label>
           </div>
-          <input type="submit" value="Submit" id="upload" class="btn btn-primary btn-block">
+          <input type="submit" value="Submit" id="upload" class="btn btn-primary btn-block mt-1">
         </form>
         <hr>
+      </div>
+      <div class="card-container d-flex flex-row flex-wrap justify-content-center">
         <% if(files){ %>
           <% files.forEach(function(file) { %>
-            <div class="card card-body mb-3">
+
+            <div class="card fileCard p-2 m-2" style="width: 18rem;">
               <% if(file.isImage) { %>
-                <img src="image/<%= file.filename %>" alt="">
-                <a href="image/<%= file.filename %>" download><%= file.filename %></a>
+                <img src="image/<%= file.filename %>" class="card-img-top" alt="" >
+                <!-- <a href="image/<= file.filename %>" download><= file.filename %></a> -->
                 <% } else { %>
                   <!-- <= file.filename %> -->
                   <a href="files/<%= file.filename %>" download><%= file.filename%></a>
-                    <img src="files/<%= file.filename%>" id="myid" alt="" srcset="">
+                    <img src="files/<%= file.filename%>" id="myid" class="card-img-top" alt="" srcset="">
 
                     <% } %>
+                    <div class="card-body">
                       <form method="post" action="/files/<%= file._id %>">
-                        <button class="btn btn-danger btn-block mt-4">Delete</button>
+                        <button class="btn btn-danger btn-block">Delete</button>
                       </form>
+                    </div>
+                      
             </div>
+
             <% }) %>
               <% } else { %>
                 <p>No files to show</p>
                 <% } %>
-      </div>
-    </div>
+              </div>
+
   </div>
 
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
