@@ -84,11 +84,14 @@ function initRoutes(app){
 
     //e-resources
     app.get('/resources', resourcesController().getResource);
+    app.get('/addresources', resourcesController().addResources);
     app.get('/files', resourcesController().getFiles);
     app.get('/files/:filename', resourcesController().getFileName);
     app.get('/image/:filename', resourcesController().getImageName);
     app.post('/upload',upload.single('file'),resourcesController().uploadResource);
     app.post('/files/:id',resourcesController().deleteResource);
+    app.post('/links',resourcesController().postLinks);
+    app.post('/deleteLink', resourcesController().deleteLink);
     
 }
 

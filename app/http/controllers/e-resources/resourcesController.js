@@ -1,8 +1,10 @@
 const mongoose = require('mongoose')
+const Resource = require('../../../models/resource');
 const multer = require('multer');
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const Grid1 = require('mongodb').Grid;
+
 
 //gfs
 const connection = mongoose.connection;
@@ -23,7 +25,10 @@ connection.once('open', () => {
 
 function resourceController(){
     return{
-
+    
+    addResources(req, res){
+      res.render('e-resources/addResources');
+    },
     
     getResource(req, res){
         gfs.files.find().toArray((err, files) => {
@@ -47,8 +52,16 @@ function resourceController(){
                     new Date(a["uploadDate"]).getTime()
                   );
                 });
+                  Resource.find({},(err, result)=>{
+                    if(result){
+                      return  res.render('e-resources/resourcesInput', { files: files, result:result });
 
-                  return  res.render('e-resources/resourcesInput', { files: files });
+                    }else{
+                      console.log(err)
+                      return  res.render('e-resources/resourcesInput', { files: files });
+
+                    }
+                  })
                 }
             });
     },
@@ -106,6 +119,29 @@ function resourceController(){
         if (err) return res.status(404).json({ err: err.message });
         res.redirect("/resources");
       });
+    },
+    postLinks(req, res){
+      const linkTitle = req.body.linkTitle;
+      const linkUrl = req.body.linkUrl;
+      const description = req.body.description;
+      const resource = new Resource({
+        title:linkTitle,
+        link : linkUrl,
+        description: description
+      })
+
+      resource.save();
+      res.redirect('/resources');
+    },
+    deleteLink(req, res){
+      const deleteResource  = req.body.deleteResource;
+      Resource.findByIdAndDelete({_id:deleteResource},(err, done) =>{
+        if(done){
+          res.redirect('/resources');
+        }else{
+          console.log(err);
+        }
+      })
     }
 }
 }

@@ -4,32 +4,15 @@
 <html lang="en">
 
 <head>
-  <!-- <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
- 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.2.228/pdf.min.js"></script> -->
-  <!-- <style>
-    img {
-      width: 100%;
-    }
-  </style> -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
   crossorigin="anonymous">
 </head>
 
 <body>
   <div class="resource-container mt-4">
-      <div class="col-md-3 m-auto">
-        <form action="/upload" method="POST" enctype="multipart/form-data">
-          <div class="custom-file mb-3">
-            <input type="file" name="file" id="file" class="custom-file-input">
-            <label for="file" class="custom-file-label">Choose File</label>
-          </div>
-          <input type="submit" value="Submit" id="upload" class="btn btn-primary btn-block mt-1">
-        </form>
-        <hr>
-      </div>
+    
+
+
       <div class="card-container d-flex flex-row flex-wrap justify-content-center">
         <% if(files){ %>
           <% files.forEach(function(file) { %>
@@ -56,6 +39,20 @@
               <% } else { %>
                 <p>No files to show</p>
                 <% } %>
+                <%if(result){%>
+                  <%result.forEach((item) =>{%>
+                    <div class="card fileCard p-2 m-2" style="width: 18rem;">
+                      <div class="card-body">
+                        <h5 class="card-title"><%=item.title.toUpperCase()%></h5>
+                        <a href="<%=item.link%>" class="card-link"><%=item.title%></a>
+                        <p class="card-text"><%=item.description%></p>
+                        <form method="post" action="/deleteLink">
+                          <button name="deleteResource" value="<%=item.id%>" class="btn btn-danger btn-block">Delete</button>
+                        </form>
+                      </div>
+                    </div>
+                  <%})%>
+                <%}%>
               </div>
 
   </div>

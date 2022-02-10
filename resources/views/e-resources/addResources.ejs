@@ -1,0 +1,24 @@
+<%- include('../partials/header') %>
+
+    <div class="col-md-4 col-lg-6 container mt-5">
+        <h3>Enter the resources to share</h3>
+      <form action="/links" method="POST">
+        <div class="custom-file mb-3">
+        <input type="text" name="linkTitle" id="linkUrl" class="form-control" placeholder="enter the link title">
+          <input type="text" name="links" id="linkUrl" class="form-control" placeholder="enter the link">
+          <textarea name="description" class="form-control mt-2" placeholder="Enter description" id="" cols="30" rows="10"></textarea>
+        </div>
+        <input type="submit" value="Submit" id="upload" class="btn btn-primary btn-block mt-1">
+      </form>
+      <hr>
+
+      <form action="/upload" method="POST" enctype="multipart/form-data">
+        <div class="custom-file mb-3">
+          <input type="file" name="file" id="file" class="custom-file-input">
+          <label for="file" class="custom-file-label">Choose File</label>
+        </div>
+        <input type="submit" value="Submit" id="upload" class="btn btn-primary btn-block mt-1">
+      </form>
+      <hr>
+    </div>
+<%- include('../partials/footer') %>
