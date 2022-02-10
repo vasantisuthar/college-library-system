@@ -9,11 +9,16 @@
 </head>
 
 <body>
-  <div class="resource-container mt-4">
+  <div class="resource-container mt-4 mx-5">
     
-
+      <!-- search resources -->
+      <form action="/searchResource" class="form-control d-flex search" method="post">
+        <input class="form-control" required name="fileName" placeholder="Type to search...">
+        <button class="btn btn-outline-secondary" type="submit">Search</button>
+      </form>
 
       <div class="card-container d-flex flex-row flex-wrap justify-content-center">
+        <!-- rendering file  -->
         <% if(files){ %>
           <% files.forEach(function(file) { %>
 
@@ -29,7 +34,7 @@
                     <% } %>
                     <div class="card-body">
                       <form method="post" action="/files/<%= file._id %>">
-                        <button class="btn btn-danger btn-block">Delete</button>
+                        <button class="btn btn-danger btn-block deleteBtn">Delete</button>
                       </form>
                     </div>
                       
@@ -39,6 +44,7 @@
               <% } else { %>
                 <p>No files to show</p>
                 <% } %>
+                <!-- rendering links -->
                 <%if(result){%>
                   <%result.forEach((item) =>{%>
                     <div class="card fileCard p-2 m-2" style="width: 18rem;">
@@ -47,7 +53,10 @@
                         <a href="<%=item.link%>" class="card-link"><%=item.title%></a>
                         <p class="card-text"><%=item.description%></p>
                         <form method="post" action="/deleteLink">
-                          <button name="deleteResource" value="<%=item.id%>" class="btn btn-danger btn-block">Delete</button>
+                          <button name="deleteResource" value="<%=item.id%>"  class="btn btn-danger btn-block" style="
+                            position: absolute;
+                            left: 0;
+                            bottom: 0;">Delete</button>
                         </form>
                       </div>
                     </div>
@@ -63,9 +72,6 @@
     crossorigin="anonymous"></script>
   <scrip src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
-
-    <!-- -=================================== -->
-    
 </body>
 
 

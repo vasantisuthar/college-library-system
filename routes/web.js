@@ -92,6 +92,9 @@ function initRoutes(app){
     app.post('/files/:id',resourcesController().deleteResource);
     app.post('/links',resourcesController().postLinks);
     app.post('/deleteLink', resourcesController().deleteLink);
+
+    //search
+    app.post('/searchResource',resourcesController().searchResource);
     
 }
 

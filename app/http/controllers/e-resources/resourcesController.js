@@ -142,6 +142,27 @@ function resourceController(){
           console.log(err);
         }
       })
+    },
+    searchResource(req, res){
+      const file = req.body.fileName;
+      Resource.find({$or:[{title:{$regex:file, $options: "$i"}},
+            {description: {$regex:file,$options:"$i"}}
+      ]},(err, result) =>{
+        gfs.files.findOne({filename: file},(err, files) =>{
+          if(!err){
+            if(result.length != 0){
+                res.render('e-resources/resourcesInput',{files:files,result: result})
+            }else if(result.length == 0){
+                // req.flash("search","Not found");
+                return res.redirect('/resources');
+            }
+        }else{
+            console.log(err);
+            res.redirect("/resouces");
+          }
+        })
+        
+      })
     }
 }
 }
