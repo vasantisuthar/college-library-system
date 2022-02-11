@@ -41,9 +41,7 @@
             </div>
 
             <% }) %>
-              <% } else { %>
-                <p>No files to show</p>
-                <% } %>
+              <% }%>
                 <!-- rendering links -->
                 <%if(result){%>
                   <%result.forEach((item) =>{%>
@@ -53,7 +51,7 @@
                         <a href="<%=item.link%>" class="card-link"><%=item.title%></a>
                         <p class="card-text"><%=item.description%></p>
                         <form method="post" action="/deleteLink">
-                          <button name="deleteResource" value="<%=item.id%>"  class="btn btn-danger btn-block" style="
+                          <button name="deleteResource" value="<%=item.id%>" class="btn btn-danger btn-block" style="
                             position: absolute;
                             left: 0;
                             bottom: 0;">Delete</button>
@@ -63,7 +61,9 @@
                   <%})%>
                 <%}%>
               </div>
-
+              <%if(!result && !files){%>
+                <p>No files to show</p>
+              <%}%>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

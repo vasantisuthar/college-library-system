@@ -33,9 +33,6 @@ function resourceController(){
     getResource(req, res){
         gfs.files.find().toArray((err, files) => {
             // Check if files
-            if (!files || files.length === 0) {
-                res.render('e-resources/resourcesInput', { files: false });
-            } else {
                 files.map(file => {
                 if (
                     file.contentType === 'image/jpeg' ||
@@ -54,15 +51,14 @@ function resourceController(){
                 });
                   Resource.find({},(err, result)=>{
                     if(result){
-                      return  res.render('e-resources/resourcesInput', { files: files, result:result });
-
-                    }else{
-                      console.log(err)
-                      return  res.render('e-resources/resourcesInput', { files: files });
-
+                      return res.render('e-resources/resourcesInput', { files: files, result:result });
+                    }else if(files){
+                      return res.render('e-resources/resourcesInput', { files: files, result:false});
+                    }else if(!files){
+                        return res.render('e-resources/resourcesInput', {result:result, files:false})
                     }
                   })
-                }
+                
             });
     },
     uploadResource(req, res){
@@ -117,12 +113,12 @@ function resourceController(){
     deleteResource(req, res){
       gridfsBucket.delete(new mongoose.Types.ObjectId(req.params.id), (err, data) => {
         if (err) return res.status(404).json({ err: err.message });
-        res.redirect("/resources");
+        return res.redirect("/resources");
       });
     },
     postLinks(req, res){
       const linkTitle = req.body.linkTitle;
-      const linkUrl = req.body.linkUrl;
+      const linkUrl = req.body.links;
       const description = req.body.description;
       const resource = new Resource({
         title:linkTitle,
@@ -137,7 +133,7 @@ function resourceController(){
       const deleteResource  = req.body.deleteResource;
       Resource.findByIdAndDelete({_id:deleteResource},(err, done) =>{
         if(done){
-          res.redirect('/resources');
+          return res.redirect('/resources');
         }else{
           console.log(err);
         }
@@ -146,23 +142,20 @@ function resourceController(){
     searchResource(req, res){
       const file = req.body.fileName;
       Resource.find({$or:[{title:{$regex:file, $options: "$i"}},
-            {description: {$regex:file,$options:"$i"}}
-      ]},(err, result) =>{
-        gfs.files.findOne({filename: file},(err, files) =>{
-          if(!err){
-            if(result.length != 0){
-                res.render('e-resources/resourcesInput',{files:files,result: result})
-            }else if(result.length == 0){
-                // req.flash("search","Not found");
-                return res.redirect('/resources');
-            }
-        }else{
-            console.log(err);
-            res.redirect("/resouces");
-          }
+            {description: {$regex:file,$options:"$i"}}]},(err, result) =>{
+              if(result.length !=0){
+                return res.render('e-resources/resourcesInput',{result: result, files:false})
+              }else if(result.length === 0){
+                gfs.files.findOne({filename: {$regex: file, $options:"$i"}},(err, files) =>{
+                  if(!err){
+                    if(files.length != 0){
+                      console.log(files);
+                      res.render('e-resources/resourcesInput',{files:files, result:false})
+                    }
+                  }
+                })
+              }
         })
-        
-      })
     }
 }
 }
