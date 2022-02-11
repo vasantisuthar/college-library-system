@@ -35,12 +35,12 @@
                     <!-- payment button -->
                     <%if(book.charge > 0){%>
                       <button type="submit" name="paymentBtn" value="stripePayment">
-                        <script 
+                        <script
                             src="//checkout.stripe.com/v2/checkout.js"
                             class="stripe-button"
                             data-key="<%= key %>"
                             data-amount="<%=book.charge * 100%>"
-                            data-currency="inr" 
+                            data-currency="inr"
                             data-name="SRKI",
                             data-description="Charge for the late submission"
                             data-locale="auto" >

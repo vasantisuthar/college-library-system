@@ -91,19 +91,20 @@ function studentController(){
                                                 Book.findOneAndUpdate({_id : issueBookId},{$inc:{qty : -1}},(err, result) =>{
                                                     if(err){
                                                         console.log(err)
+                                                        return res.redirect('/');
                                                     }else{
                                                         if(result){
-                                                            res.redirect('/dashboard')
+                                                            return res.redirect('/dashboard')
                                                         }
                                                     }
                                                 });
                                                 Student.findByIdAndUpdate({_id:req.user._id},{$set:{"activity":"issued"}},{upsert:true},(err, updated) =>{
-                                                    res.send("success")
+                                                    console.log("success")
                                                 });
                                                 
                                             }).catch(err =>{
                                                 console.log(err);
-                                                res.redirect('/')
+                                                // return res.redirect('/')
                                             })
                                         }else{
                                             req.flash('issue',"Student can issue only two books")
@@ -117,7 +118,7 @@ function studentController(){
                                 })      
                             }).catch(err =>{
                                 console.log(err);
-                                res.redirect('/')
+                                return res.redirect('/')
                             })     
                         }else if(!foundBook){
                             req.flash('issue',"Book is not available")
