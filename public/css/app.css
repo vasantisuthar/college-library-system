@@ -384,3 +384,19 @@ input[type=submit]:active {
   display: block;
   font-size: 1rem;
 }
+
+.resource-container {
+  margin-top: 4%;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.fileCard {
+  position: relative;
+}

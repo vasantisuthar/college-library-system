@@ -1,8 +1,6 @@
 <%- include('../partials/header') %>
 <%- include('../partials/bootstrapHeader') %>
 
-
-
 <main>
   <div class="container py-4">
     <%if(result.activity == "issued"){%>
@@ -27,36 +25,35 @@
                   <!-- remove button -->
                   <button class="btn btn-outline-danger px-4" name="removeBtn" value="remove" type="submit">Remove</button>
                 </div>
-                
-                <%if(moment().isAfter(returnDate) && !done){%>
-                  <!-- book charge -->
-                <div class="col col-lg-4 col-md-8">
-                    <p class="col-md-8 fs-4 text-danger" id="penalty">Charge:<span class="px-3">&#8377;<%=book.charge%></span></p>
-                    <!-- payment button -->
-                    <%if(book.charge > 0){%>
-                      <button type="submit" name="paymentBtn" value="stripePayment">
-                        <script
-                            src="//checkout.stripe.com/v2/checkout.js"
-                            class="stripe-button"
-                            data-key="<%= key %>"
-                            data-amount="<%=book.charge * 100%>"
-                            data-currency="inr"
-                            data-name="SRKI",
-                            data-description="Charge for the late submission"
-                            data-locale="auto" >
-                        </script>
-                      </button>
-                        
-                  <%}%>
-                  </div>
-              <%}%>
-
               </div>
             </div>
           </div>
         </form>
-    <%})%>
-    <%}%>
+
+            <!-- payment form -->
+            <%if(moment().isAfter(returnDate) && !done){%>
+              <!-- book charge -->
+            <div class="col col-lg-4 col-md-8">
+            <!-- payment button -->
+            <%if(book.charge > 0){%>
+                <p class="col-md-8 fs-4 text-danger"  id="penalty">Charge:<span class="px-3">&#8377;<%=book.charge%></span></p>
+                <form action="/payment" method="post">
+                  <script
+                      src="//checkout.stripe.com/v2/checkout.js"
+                      class="stripe-button"
+                      data-key="<%= key %>"
+                      data-amount="<%=book.charge * 100%>"
+                      data-currency="inr"
+                      data-name="SRKI",
+                      data-description="Charge for the late submission"
+                      data-locale="auto" >
+                  </script>
+                  </form>
+            <%}%>
+              </div>
+          <%}%>
+      <%})%>
+<%}%>
 
   </div>
 </main>

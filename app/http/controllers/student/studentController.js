@@ -128,14 +128,7 @@ function studentController(){
                 })
             },
             removeIssuedBook(req, res){
-                
-                const buttonValue = req.body.removeBtn;
-                const stripeBtn = req.body.paymentBtn;
-                
-                console.log(buttonValue);
-                
-                if(buttonValue){
-                    const issuedBookIsbn = req.body.issuedBookIsbn;
+                const issuedBookIsbn = req.body.issuedBookIsbn;
                     Dashboard.findOneAndRemove({isbn: issuedBookIsbn},(err, result) =>{
                         if(result){
                             Dashboard.countDocuments({studentId: req.user._id}).then((count) =>{
@@ -143,7 +136,7 @@ function studentController(){
                                     Student.findOneAndUpdate({_id:req.user._id},{$set:{activity:"returned"}},(err, returned) =>{
                                         if(returned){
                                             console.log("returned")
-                                            res.redirect('/');
+                                            
                                         }else{
                                             console.log(err)
                                         }
@@ -165,40 +158,7 @@ function studentController(){
                         console.log(err)
                     }
                 })
-            }
-
-            if(stripeBtn){
-                console.log("from post request for payment")
-                stripe.customers.create({
-                email: req.body.stripeEmail,
-                source: req.body.stripeToken,
-                })
-                .then((customer) => {
-                res.redirect('/');
-                    return stripe.charges.create({
-                    currency: 'INR',
-                    customer: customer.id
-                });
-            })
-            .then((charge) => {
-              // student paid charge  
-                console.log(charge)
-              // Dashboard.findByIdAndUpdate({_id:singleObj.id},{$set:{"charge":null}},{upsert:true},(err, done)=>{
-              //   if(done){
-              //     console.log("updated charge to null");
-              //     res.redirect('/');
-              //   }else{
-              //     console.log(err)
-              //   }
-              // })
-  
-                // If no error occurs
-            })
-            .catch((err) => {
-              res.send(err)       // If some error occurs
-            });
-            }
-        }
         }
     }
+}
 module.exports = studentController;
