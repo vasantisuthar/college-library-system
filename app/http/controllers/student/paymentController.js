@@ -4,32 +4,32 @@ const stripe = require('stripe')(process.env.secret_key);
 const PaymentController = () =>{
     return{
         postRequestForPayment(req, res){
-          try{
-              stripe.customers.create({
-              email: req.body.stripeEmail,
-              source: req.body.stripeToken,
+          const charge = req.body.bookCharge
+          const bookId = req.body.bookId
+          console.log(charge)
+          try{  
+              
+            
+            stripe.charges.create({
+              amount: 2000,
+              currency: "usd",
+              source: "tok_mastercard", // obtained with Stripe.js
+              description: "My First Test Charge (created for API docs)"
+            }, {
+              idempotencyKey: "797MuvCWKGmZvKwT"
+            }, function(err, charge) {
+              // asynchronously called
+              // student paid charge  
+              Dashboard.findByIdAndUpdate({_id:bookId},{$set:{"charge":null}},{upsert:true},(err, done)=>{
+                if(done){
+                  res.redirect('/dashboard');
+                }else{
+                  console.log(err)
+                }
+              })
+  
+                // If no error occurs
             })
-            .then((customer) => {
-                stripe.charges.create({
-                amount:
-                currency: 'INR',
-                customer: customer.id
-            });
-          })
-          .then(() => {
-            // student paid charge  
-            Dashboard.findByIdAndUpdate({_id:singleObj.id},{$set:{"charge":null}},{upsert:true},(err, done)=>{
-              if(done){
-                console.log("updated charge to null");
-                res.redirect('/dashboard');
-              }else{
-                console.log(err)
-              }
-            })
-
-              // If no error occurs
-
-          })
           .catch((err) => {
             console.log(err)       // If some error occurs
           });

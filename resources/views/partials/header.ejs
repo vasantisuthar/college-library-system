@@ -38,26 +38,44 @@
             </div>
 
             <div class="nav-list">
-                <a href="/news">Hacker News</a>
-
-                
                 <%if(user.role === 'Student'){%>
                     <a href="/dashboard">Dashboard</a>
                 <%}else if(user.role === 'admin'){%>
-                    <a href="/add">Add Books</a>
+                    <!-- admin task -->
+                    <a href="/adminDashboard">Dashboard</a>
+                    <div class="dropdown">
+                        <a class="btn dropdown-toggle px-3" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            Admin
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="/add" style="color:black;" >Add books</a></li>
+                            <li><a class="dropdown-item" href="/register" style="color:black;">Register student</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- activity tab -->
+                    <div class="dropdown">
+                        <a class="btn dropdown-toggle px-3" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            Activity
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="/student/issued" style="color:black;" >Issued</a></li>
+                            <li><a class="dropdown-item" href="/student/history" style="color:black;">Returned</a></li>
+                        </ul>
+                    </div>
                 <%}%>
-
+                
                 <div class="dropdown">
                     <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                      Resources
+                        Resources
                     </a>
-                  
+                
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                      <li><a class="dropdown-item" href="/addresources" style="color:black;" >Add resources</a></li>
-                      <li><a class="dropdown-item" href="/resources" style="color:black;">View resources</a></li>
-                      
+                        <li><a class="dropdown-item" href="/addresources" style="color:black;" >Add resources</a></li>
+                        <li><a class="dropdown-item" href="/resources" style="color:black;">View resources</a></li>
+                    
                     </ul>
-                  </div>
+                    </div>
                 
                 <a href="/logout">logout</a>
             </div>
@@ -69,17 +87,13 @@
     <div class="nav-scroller bg-body shadow-sm">
         <nav class="nav nav-underline" aria-label="Secondary navigation">
             <%if(user.role == "admin"){%>
-                <a class="nav-link active fs-6" aria-current="page" href="/adminDashboard">Dashboard</a>
+                <a class="nav-link active fs-6" aria-current="page" href="/news">Hacker News</a>
             <%}%>
 
         <%if(user.role == "Student"){%>
             <a class="nav-link fs-6" href="#">
                 Categories
                 <span class="badge bg-light text-dark rounded-pill align-text-bottom">6</span>
-            </a>
-        <%}else{%>
-            <a class="nav-link fs-6" href="/register">
-                Register Student
             </a>
         <%}%>
         <button type="submit" name="navLink" value = "Software"  class="nav-link fs-6">Software</button>

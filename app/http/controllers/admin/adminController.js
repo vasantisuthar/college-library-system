@@ -139,7 +139,7 @@ function adminController(){
             })
         }
     },
-    returnBook(req, res){
+    returnBook(req, res){  //return the book when the student has returned the book
             const dashboardStudentId = req.body.studentId;
             const bookIsbn = req.body.bookIsbn;
 
@@ -166,6 +166,17 @@ function adminController(){
                             }
                         
                     })
+                }
+            })
+        },
+        getHistory(req, res){
+            Student.find({activity:"returned"},(err, collection) =>{
+                if(collection){
+                    console.log(collection)
+                    res.render('admin/history',{studentCollection: collection})
+
+                }else{
+                    console.log(err)
                 }
             })
         }

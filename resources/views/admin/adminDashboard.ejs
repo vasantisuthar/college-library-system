@@ -9,13 +9,12 @@
             <button class="btn btn-outline-secondary" name="searchEnrollment" type="submit">Search</button>
         </form> 
         <%foundEnrollment.forEach((student) =>{%>
-          <form action="/removeIssuedBook" method="post">
             <div class="h-100 p-1 mb-2 bg-light border rounded-3">
-              <div class="container-fluid py-0">
+              <div class="container-fluid py-0 d-flex flex-col justify-content-between">
                 <a class="enrollNo" href="/dashboard/<%=student.enrollment%>"><h4 class="display-7 fw-bold text-success"><%=student.enrollment%></h4></a>
+                <button type="submit" class="btn btn-success">issued</button>
               </div>
             </div>
-          </form>
       <%})%>
     </div>
   </main>

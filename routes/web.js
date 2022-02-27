@@ -82,6 +82,8 @@ function initRoutes(app){
     app.get('/dashboard/:enrollment',admin, adminController().getDetails);
     app.post('/searchEnroll',adminController().searchEnroll);
     app.post('/returnIssuedBook', adminController().returnBook);
+    app.get('/student/history', adminController().getHistory);
+    // app.post('/studentBookIsIssued', adminController().studentIssuedBook);
 
     //e-resources
     app.get('/resources', resourcesController().getResource);
