@@ -7,12 +7,11 @@
         <form action="/searchEnroll" class="form-control d-flex search mb-4" method="post">
             <input class="form-control" required name="enroll" placeholder="Type to search...">
             <button class="btn btn-outline-secondary" name="searchEnrollment" type="submit">Search</button>
-        </form> 
+        </form>
         <%foundEnrollment.forEach((student) =>{%>
             <div class="h-100 p-1 mb-2 bg-light border rounded-3">
               <div class="container-fluid py-0 d-flex flex-col justify-content-between">
-                <a class="enrollNo" href="/dashboard/<%=student.enrollment%>"><h4 class="display-7 fw-bold text-success"><%=student.enrollment%></h4></a>
-                <button type="submit" class="btn btn-success">issued</button>
+                <a class="enrollNo" href="/dashboard/<%=student.enrollment%>"><h4 class="display-7 fw-bold text-primary"><%=student.enrollment%></h4></a>
               </div>
             </div>
       <%})%>

@@ -83,6 +83,8 @@ function initRoutes(app){
     app.post('/searchEnroll',adminController().searchEnroll);
     app.post('/returnIssuedBook', adminController().returnBook);
     app.get('/student/history', adminController().getHistory);
+    app.get('/student/currentlyissued', adminController().currentlyIssued);
+    app.post('/searchEnrollForIssued',adminController().searchEnrollForIssued);
     // app.post('/studentBookIsIssued', adminController().studentIssuedBook);
 
     //e-resources

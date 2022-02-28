@@ -69,17 +69,17 @@ function adminController(){
                 var userEmail = process.env.email_id;
                 var userPassword = process.env.user_password;
 
-               
+    
                 var transporter = nodemailer.createTransport({
                     host: "smtp.gmail.com",
                     port: 587,                    
                     auth: {
-                      user: userEmail,
-                      pass: userPassword
+                        user: userEmail,
+                        pass: userPassword
                     },
                     
-                  });
-                  
+                    });
+
 
                 // setup e-mail data with unicode symbols
                 var mailOptions = {
@@ -139,18 +139,32 @@ function adminController(){
             })
         }
     },
+    currentlyIssued(req, res){
+        Dashboard.find({issued:true}).populate('studentId').then(found => {
+            res.render('admin/currentlyIssued',{foundStudents:found, searchedStudent:null});
+        }).catch(error => console.log(error))
+    },
+    searchEnrollForIssued(req, res){
+        const enroll = req.body.enroll;
+        Student.findOne({enrollment:enroll},(err, result) => {
+            if(result){
+                Dashboard.find({issued:true,studentId:result._id}).populate('studentId').then(searchedStudent => {
+                    res.render('admin/currentlyIssued',{searchedStudent:searchedStudent, foundStudents: null})
+                }).catch(error => console.log(error))
+            }
+        })
+    },
     returnBook(req, res){  //return the book when the student has returned the book
             const dashboardStudentId = req.body.studentId;
             const bookIsbn = req.body.bookIsbn;
-
-            Dashboard.findOneAndDelete({isbn: bookIsbn},{studentId : dashboardStudentId},(err, result) =>{
+            if(req.body.hasOwnProperty('returnBook')){
+                Dashboard.findOneAndDelete({isbn: bookIsbn},{studentId : dashboardStudentId},(err, result) =>{
                 if(result){
                     Dashboard.countDocuments({studentId:dashboardStudentId}).then(count =>{
-                        console.log(count)
                         if(count == 0){
                             Student.findOneAndUpdate({_id:dashboardStudentId},{$set:{activity:"returned"}},(err, returned) =>{
                                 if(returned){
-                                    console.log("returned")
+                                    console.log("book is returned");
                                 }else{
                                     console.log(err)
                                 }
@@ -167,7 +181,20 @@ function adminController(){
                         
                     })
                 }
+                
             })
+        }
+        if(req.body.hasOwnProperty('issueBook')){
+            Dashboard.findOneAndUpdate({studentId:dashboardStudentId,isbn: bookIsbn},{$set:{issued:true}},(err, found) => {
+                if(found){
+                    console.log(found);
+                    res.redirect('/adminDashboard')
+                }else{
+                    console.log(err);
+                }
+            })
+            
+        }
         },
         getHistory(req, res){
             Student.find({activity:"returned"},(err, collection) =>{

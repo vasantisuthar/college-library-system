@@ -1,0 +1,40 @@
+<%- include('../partials/header')%>
+
+<main>
+    <div class="container py-4">
+        <h4 class="text-secondary">Issued book details</h4>
+      <!--search input-->
+        <form action="/searchEnrollForIssued" class="form-control d-flex search mb-4" method="post">
+            <input class="form-control" required name="enroll" placeholder="Type to search...">
+            <button class="btn btn-outline-secondary" name="searchEnrollment" type="submit">Search</button>
+        </form>
+        <%if(searchedStudent){%>
+            <%searchedStudent.forEach((student) =>{%>
+                <div class="h-100 p-1 mb-2 bg-light border rounded-3">
+                  <div class="container-fluid py-0 d-flex flex-col justify-content-between">
+                    <h4 class="display-7 fw-bold text-success"><%=student.studentId.enrollment%></h4></a>
+                    <h5 class="display-7 fw-bold text-secondary"><%=student.title%></h5></a>
+                    <h5 class="display-7 fw-bold text-secondary"><%=student.isbn%></h5></a>
+                    <button class="btn btn-warning" type="submit">Returned</button>
+    
+                  </div>
+                </div>
+          <%})%>
+        <%}else{%>
+            <%foundStudents.forEach((student) =>{%>
+                <div class="h-100 p-1 mb-2 bg-light border rounded-3">
+                  <div class="container-fluid py-0 d-flex flex-col justify-content-between">
+                    <h4 class="display-7 fw-bold text-success"><%=student.studentId.enrollment%></h4></a>
+                    <h5 class="display-7 fw-bold text-secondary"><%=student.title%></h5></a>
+                    <h5 class="display-7 fw-bold text-secondary"><%=student.isbn%></h5></a>
+                    <button class="btn btn-warning" type="submit">Returned</button>
+    
+                  </div>
+                </div>
+          <%})%>
+        <%}%>
+        
+    </div>
+  </main>
+    
+<%- include('../partials/footer')%>
