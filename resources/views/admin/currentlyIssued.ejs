@@ -8,6 +8,7 @@
             <input class="form-control" required name="enroll" placeholder="Type to search...">
             <button class="btn btn-outline-secondary" name="searchEnrollment" type="submit">Search</button>
         </form>
+        <!-- details for searched student -->
         <%if(searchedStudent){%>
             <%searchedStudent.forEach((student) =>{%>
                 <div class="h-100 p-1 mb-2 bg-light border rounded-3">
@@ -24,13 +25,14 @@
                 </div>
           <%})%>
         <%}else{%>
+          <!-- details of all the students -->
             <%foundStudents.forEach((student) =>{%>
                 <div class="h-100 p-1 mb-2 bg-light border rounded-3">
                   <div class="container-fluid py-0 d-flex flex-col justify-content-between">
                     <h4 class="display-7 fw-bold text-success"><%=student.studentId.enrollment%></h4></a>
                     <h5 class="display-7 fw-bold text-secondary"><%=student.title%></h5></a>
                     <h5 class="display-7 fw-bold text-secondary"><%=student.isbn%></h5></a>
-                    <form action="/returnIssuedBook" method="post">
+                    <form action="/returnIssuedBook" method="post" class="justify-content-end">
                       <input type="hidden" name="bookIsbn" value="<%=student.isbn%>">
                       <input type="hidden" name="studentId" value="<%=student.studentId._id%>">
                       <button class="btn btn-warning" name="returnBook" type="submit">Returned</button>

@@ -43,24 +43,26 @@ function studentController(){
             getDashboard(req, res){
                 const publishable_key = process.env.publishable_key;
                 Dashboard.find({studentId: req.user._id},null,{sort: {'createdAt': -1}}, (err, foundBook) =>{
+
                     Student.findOne({_id:req.user._id},async (err, result)=>{
+                        
                         if(foundBook){
                             if(result){
                                 const charges = getPenalty(foundBook);
                                 const returnDate =  charges[0];
                                 const obj = charges[1];
 
-                                if(moment().isAfter(returnDate)){
-                                    var done = false;
-                                    obj.forEach(async (singleObj) => {
-                                        const updated = await Dashboard.findByIdAndUpdate({_id:singleObj.id},{$set:{"charge":singleObj.charge}},{upsert:true})
-                                            if(updated){
-                                                done = true;
-                                            }else{
-                                                console.log(err)
-                                            }
+                                    if(moment().isAfter(returnDate)){
+                                        var done = false;
+                                        obj.forEach(async (singleObj) => {
+                                            const updated = await Dashboard.findByIdAndUpdate({_id:singleObj.id},{$set:{"charge":singleObj.charge}},{upsert:true})
+                                                if(updated){
+                                                    done = true;
+                                                }else{
+                                                    console.log(err)
+                                                }
                                         });
-                                }
+                                    }
                                     await res.render('student/dashboard',{foundBook: foundBook, moment : moment, returnDate : returnDate, result:result, key : publishable_key, done:done})
                                 }
                             }else{

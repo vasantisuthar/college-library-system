@@ -23,7 +23,9 @@
 
                   <input type="hidden" name="issuedBookIsbn" value="<%=book.isbn%>">
                   <!-- remove button -->
-                  <button class="btn btn-outline-danger px-4" name="removeBtn" value="remove" type="submit">Remove</button>
+                  <%if(!book.issued){%>
+                    <button class="btn btn-outline-danger px-4" name="removeBtn" value="remove" type="submit">Remove</button>
+                  <%}%>
                 </div>
               </div>
             </div>
