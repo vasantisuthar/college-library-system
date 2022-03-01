@@ -32,6 +32,9 @@
 //         // xhttp.send(data)
 //         // console.log(data)
 // })
+function disableButton() {
+  document.getElementById('disableBtn').disabled = true;
+}
 
 /***/ }),
 

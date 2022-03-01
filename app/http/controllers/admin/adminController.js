@@ -69,7 +69,7 @@ function adminController(){
                 var userEmail = process.env.email_id;
                 var userPassword = process.env.user_password;
 
-    
+                //send mail
                 var transporter = nodemailer.createTransport({
                     host: "smtp.gmail.com",
                     port: 587,                    
@@ -107,7 +107,7 @@ function adminController(){
                     return res.redirect('/register')
                 });
             },
-        adminDashboard(req, res){
+        adminDashboard(req, res){ //show the list of students who want to issue the book
             Student.find({activity: "issued"},(err, foundStudent) =>{
                 if(foundStudent){
                     res.render('admin/adminDashboard',{foundEnrollment : foundStudent});
@@ -116,7 +116,7 @@ function adminController(){
                 }
             })
         },
-        getDetails(req, res){
+        getDetails(req, res){ // show the details of the book details of the students who want to issue the book
             const enrollment = req.params.enrollment;
             Student.findOne({enrollment:enrollment, activity:"issued"},(err, found) =>{
                 if(found){
@@ -128,10 +128,9 @@ function adminController(){
                         }
                 })
             }
-                
             })
         },
-        searchEnroll(req, res){
+        searchEnroll(req, res){ // search the student with their enrollment no
             if(req.body.hasOwnProperty("searchEnrollment")){
             const enroll = req.body.enroll;
             Student.findOne({enrollment:enroll, activity:"issued"},(err, found) =>{
@@ -139,12 +138,12 @@ function adminController(){
             })
         }
     },
-    currentlyIssued(req, res){
+    currentlyIssued(req, res){ // show the list of students who has issued the book
         Dashboard.find({issued:true}).populate('studentId').then(found => {
             res.render('admin/currentlyIssued',{foundStudents:found, searchedStudent:null});
         }).catch(error => console.log(error))
     },
-    searchEnrollForIssued(req, res){
+    searchEnrollForIssued(req, res){ // search among the issued book students with their enrollment
         const enroll = req.body.enroll;
         Student.findOne({enrollment:enroll},(err, result) => {
             if(result){
@@ -157,7 +156,8 @@ function adminController(){
     returnBook(req, res){  //return the book when the student has returned the book
             const dashboardStudentId = req.body.studentId;
             const bookIsbn = req.body.bookIsbn;
-            if(req.body.hasOwnProperty('returnBook')){
+
+            if(req.body.hasOwnProperty('returnBook')){  //check for returnBook button submit
                 Dashboard.findOneAndDelete({isbn: bookIsbn},{studentId : dashboardStudentId},(err, result) =>{
                 if(result){
                     Dashboard.countDocuments({studentId:dashboardStudentId}).then(count =>{
@@ -172,7 +172,7 @@ function adminController(){
                         }
                     })
                     
-                    Book.findOneAndUpdate({isbn:bookIsbn},{$inc:{qty:1}},(err, updated)=>{
+                    Book.findOneAndUpdate({isbn:bookIsbn},{$inc:{qty:1}},(err, updated)=>{ //increase the book quantity once it is returned
                             if(updated){
                                 res.redirect('/adminDashboard')
                             }else{
@@ -185,9 +185,8 @@ function adminController(){
             })
         }
         if(req.body.hasOwnProperty('issueBook')){
-            Dashboard.findOneAndUpdate({studentId:dashboardStudentId,isbn: bookIsbn},{$set:{issued:true}},(err, found) => {
+            Dashboard.findOneAndUpdate({studentId:dashboardStudentId,isbn: bookIsbn},{$set:{issued:true}},(err, found) => { //set the field to true once the student has issued
                 if(found){
-                    console.log(found);
                     res.redirect('/adminDashboard')
                 }else{
                     console.log(err);
@@ -196,13 +195,12 @@ function adminController(){
             
         }
         },
-        getHistory(req, res){
+        getHistory(req, res){ //get the history
             Student.find({activity:"returned"},(err, collection) =>{
                 if(collection){
                     console.log(collection)
                     res.render('admin/history',{studentCollection: collection})
-
-                }else{
+                    }else{
                     console.log(err)
                 }
             })

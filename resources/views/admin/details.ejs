@@ -11,18 +11,21 @@
                         <p class="col-md-8 fs-5"><%=detail.isbn%></p>
                         <p class="col-md-8 fs-5 fw-normal">Issue Date : <span class="col-md-8 fs-5"><%=moment(detail.createdAt).format('DD-MM-YYYY')%></span></p>
                         <p class="col-md-8 fs-5 fw-normal">Return Date : <span class="col-md-8 fs-5"><%=moment(detail.createdAt).add(7, 'days').format('DD-MM-YYYY')%></span></p>
-                        <div class="row">
+                        <div class="d-flex justify-content-between align-items-center">
                         <form action="/returnIssuedBook" method="post">
-                            <div class="col col-lg-8 col-md-8">
+                            <div>
                                 <input type="hidden" name="studentId" value="<%=studentId%>">
                                 <input type="hidden" name="bookIsbn" value="<%=detail.isbn%>">
-                                <button type="submit" class="btn btn-primary" name="returnBook">Returned</button>
-                                <button type="submit" class="btn btn-success" name="issueBook">Issued</button>
+                                <button type="submit" class="btn btn-success" id="disableBtn" name="issueBook" onclick=disableButton()>Accept</button>
                             </div>
                         </form>
 
-                            <div class="col col-lg-3 col-md-8">
-                                <p class="col-md-8 fs-4 text-danger">Pending</p>
+                            <div>
+                                <%if(detail.issued){%>
+                                    <p class="col-md-8 fs-4 text-success">Student has issued the book</p>
+                                <%}else{%>
+                                    <p class="col-md-8 fs-4 text-danger">Pending to be issued</p>
+                                <%}%>
                                 <%if(detail.charge){%>
                                     <p class="fs-5 text-danger">Charge : <span>&#8377;<%=detail.charge%></span></p>
                                 <%}%>

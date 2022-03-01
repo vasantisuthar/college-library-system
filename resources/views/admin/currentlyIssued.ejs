@@ -15,8 +15,11 @@
                     <h4 class="display-7 fw-bold text-success"><%=student.studentId.enrollment%></h4></a>
                     <h5 class="display-7 fw-bold text-secondary"><%=student.title%></h5></a>
                     <h5 class="display-7 fw-bold text-secondary"><%=student.isbn%></h5></a>
-                    <button class="btn btn-warning" type="submit">Returned</button>
-    
+                    <form action="/returnIssuedBook" method="post">
+                      <input type="hidden" name="bookIsbn" value="<%=student.isbn%>">
+                      <input type="hidden" name="studentId" value="<%=student.studentId._id%>">
+                      <button class="btn btn-warning" name="returnBook" type="submit">Returned</button>
+                    </form>
                   </div>
                 </div>
           <%})%>
@@ -27,8 +30,11 @@
                     <h4 class="display-7 fw-bold text-success"><%=student.studentId.enrollment%></h4></a>
                     <h5 class="display-7 fw-bold text-secondary"><%=student.title%></h5></a>
                     <h5 class="display-7 fw-bold text-secondary"><%=student.isbn%></h5></a>
-                    <button class="btn btn-warning" type="submit">Returned</button>
-    
+                    <form action="/returnIssuedBook" method="post">
+                      <input type="hidden" name="bookIsbn" value="<%=student.isbn%>">
+                      <input type="hidden" name="studentId" value="<%=student.studentId._id%>">
+                      <button class="btn btn-warning" name="returnBook" type="submit">Returned</button>
+                    </form>
                   </div>
                 </div>
           <%})%>
