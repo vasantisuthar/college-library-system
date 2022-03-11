@@ -34,11 +34,21 @@
                     <h4 class="display-7 fw-bold text-success"><%=student.studentId.enrollment%></h4></a>
                     <h5 class="display-7 fw-medium text-secondary"><%=student.title%></h5></a>
                     <%if(student.charge){%>
-                      <h3 class="display-7 fw-lighter text-danger"><span>&#8377;<%=student.charge%></span></h3>
+                      <h3 class="display-7 fw-lighter text-danger"><span>&#8377;<%=student.pay%></span></h3>
                     <%}%>
+
                     <form action="/returnIssuedBook" method="post" class="justify-content-end">
                       <input type="hidden" name="bookIsbn" value="<%=student.isbn%>">
                       <input type="hidden" name="studentId" value="<%=student.studentId._id%>">
+                      <%if(student.charge === 0){%>
+                        <h3 class="display-7 fw-lighter text-danger"><span>&#8377;<%=student.pay%></span></h3>
+                        <h5 class="display-7 fw-medium text-success">
+                          Paid 
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                        </svg>
+                      </h5>
+                      <%}%>
                       <button class="btn btn-warning" name="returnBook" type="submit">Returned</button>
                     </form>
                   </div>

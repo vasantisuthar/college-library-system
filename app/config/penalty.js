@@ -4,8 +4,6 @@ const moment = require('moment')
 
 const getPenalty = (foundBook) =>{
     let obj = [];
-
-    
     var returnDate, currentDate, penalty, days_diff;
     var price = 5
 

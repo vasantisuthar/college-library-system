@@ -10,6 +10,7 @@ const dashboardSchema = new mongoose.Schema({
     isbn   : {type :String, required: true},
     issued : {type:Boolean,required: false},
     charge: {type:Number, required:false},
+    pay:    {type:Number, required:false},
     studentId:{
         type : mongoose.Schema.Types.ObjectId,
         ref : 'Student',
