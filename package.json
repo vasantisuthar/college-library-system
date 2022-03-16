@@ -15,6 +15,7 @@
     "connect-mongo": "^4.6.0",
     "convert-excel-to-json": "^1.7.0",
     "crypto": "^1.0.1",
+    "csvtojson": "^2.0.10",
     "dot-env": "0.0.1",
     "dotenv": "^10.0.0",
     "ejs": "^3.1.6",
