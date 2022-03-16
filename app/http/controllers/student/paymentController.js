@@ -1,4 +1,4 @@
-const Dashboard = require('../../../models/dashboard');
+const {Dashboard} = require('../../../models/dashboard');
 const stripe = require('stripe')(process.env.secret_key);
 
 const PaymentController = () =>{

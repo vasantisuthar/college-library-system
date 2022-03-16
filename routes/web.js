@@ -1,8 +1,18 @@
 const multer = require('multer');
 const {GridFsStorage} = require('multer-gridfs-storage');
 const crypto = require('crypto')
-const path = require('path');
+var excelToJson = require('convert-excel-to-json');
 
+var excelStorage = multer.diskStorage({  
+    destination:(req,file,cb)=>{  
+    cb(null,'./public/excelUploads');  
+    },  
+    filename:(req,file,cb)=>{  
+    cb(null,file.originalname);  
+    }  
+});  
+
+var excelUploads = multer({storage:excelStorage}); 
 
 const storage = new GridFsStorage({
     url: 'mongodb://localhost:27017/Library',
@@ -83,9 +93,9 @@ function initRoutes(app){
     app.get('/dashboard/:enrollment',admin, adminController().getDetails);
     app.post('/searchEnroll',adminController().searchEnroll);
     app.post('/returnIssuedBook', adminController().returnBook);
-    app.get('/student/history', adminController().getHistory);
-    app.get('/student/currentlyissued', adminController().currentlyIssued);
+    app.get('/student/currentlyissued',auth, adminController().currentlyIssued);
     app.post('/searchEnrollForIssued',adminController().searchEnrollForIssued);
+    app.post('/uploadExcelFile', excelUploads.single("uploadfile"), adminController().uploadExcel);
     // app.post('/studentBookIsIssued', adminController().studentIssuedBook);
 
     //e-resources

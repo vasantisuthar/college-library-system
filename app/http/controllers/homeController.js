@@ -1,4 +1,4 @@
-const Student = require('../../models/student');
+const {Student} = require('../../models/student');
 const Book = require('../../models/books');
 function homeController(){
     return{

@@ -1,6 +1,6 @@
-const Student = require('../../../models/student');
+const {Student} = require('../../../models/student');
 const Book = require('../../../models/books');
-const Dashboard = require('../../../models/dashboard');
+const {Dashboard} = require('../../../models/dashboard');
 const getPenalty = require('../../../config/penalty.js')
 const moment = require('moment');
 
@@ -31,6 +31,8 @@ function studentController(){
                                         totalBooks:foundBook.totalBooks,
                                         moment:moment,
                                         relatedBook: relatedBook})
+                                        const eventEmitter = req.app.get('eventEmitter');
+                                        eventEmitter.emit('getBookQty', foundBook.qty);     
                                     }
                                     
                                 }

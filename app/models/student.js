@@ -8,4 +8,7 @@ const studentSchema = new Schema({
     role: {type: String, default : 'Student'},
     activity:{type:String,required: false}
 },{timestamps:true});
-module.exports = mongoose.model("Student", studentSchema);
+module.exports = { 
+    Student : mongoose.model("Student", studentSchema), 
+    studentSchema : studentSchema
+};

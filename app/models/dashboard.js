@@ -22,4 +22,7 @@ const dashboardSchema = new mongoose.Schema({
     updatedAt: false
 }})
 
-module.exports = mongoose.model('Dashboard',dashboardSchema);
+module.exports = {
+    Dashboard: mongoose.model('Dashboard',dashboardSchema),
+    dashboardSchema : dashboardSchema
+};

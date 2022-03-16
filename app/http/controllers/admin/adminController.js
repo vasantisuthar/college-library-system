@@ -1,6 +1,7 @@
 const Book = require('../../../models/books');
-const Dashboard = require('../../../models/dashboard');
-const Student = require('../../../models/student');
+const {Dashboard} = require('../../../models/dashboard');
+const {Student} = require('../../../models/student');
+const History = require('../../../models/history');
 const nodemailer = require('nodemailer');
 
 const moment = require('moment')
@@ -79,8 +80,6 @@ function adminController(){
                     },
                     
                     });
-
-
                 // setup e-mail data with unicode symbols
                 var mailOptions = {
                     from: userEmail,    // sender address
@@ -118,16 +117,15 @@ function adminController(){
         },
         getDetails(req, res){ // show the details of the book details of the students who want to issue the book
             const enrollment = req.params.enrollment;
-            Student.findOne({enrollment:enrollment, activity:"issued"},(err, found) =>{
+            Student.findOne({enrollment:enrollment, activity:"issued"}).then(found => {
                 if(found){
                 Dashboard.find({studentId: found._id},(err, foundDetails) =>{
-                        if(err){
-                            console.log(err)
-                        }else{
-                            res.render('admin/details',{foundDetails: foundDetails,studentId:found._id, moment : moment})
-                        }
+                    res.render('admin/details',{foundDetails: foundDetails,studentId:found._id, moment : moment})
+                        
                 })
             }
+            }).catch(err => {
+                console.log(err)
             })
         },
         searchEnroll(req, res){ // search the student with their enrollment no
@@ -156,10 +154,12 @@ function adminController(){
     returnBook(req, res){  //return the book when the student has returned the book
             const dashboardStudentId = req.body.studentId;
             const bookIsbn = req.body.bookIsbn;
+            console.log(bookIsbn)
 
             if(req.body.hasOwnProperty('returnBook')){  //check for returnBook button submit
-                Dashboard.findOneAndDelete({isbn: bookIsbn},{studentId : dashboardStudentId},(err, result) =>{
+                Dashboard.findOneAndDelete({isbn: bookIsbn,studentId : dashboardStudentId}).then (result =>{
                 if(result){
+                    console.log(result)
                     Dashboard.countDocuments({studentId:dashboardStudentId}).then(count =>{
                         if(count == 0){
                             Student.findOneAndUpdate({_id:dashboardStudentId},{$set:{activity:"returned"}},(err, returned) =>{
@@ -171,48 +171,71 @@ function adminController(){
                             })
                         }
                     })
-                    
-                    Book.findOneAndUpdate({isbn:bookIsbn},{$inc:{qty:1}},(err, updated)=>{ //increase the book quantity once it is returned
+                    Book.findOneAndUpdate({isbn:bookIsbn},{$inc:{qty:1}}).then(updated => { //increase the book quantity once it is returned
                             if(updated){
                                 res.redirect('/adminDashboard')
-                            }else{
-                                console.log(err);
                             }
-                        
+                    }).catch(err => {
+                        console.log(err);
                     })
                 }
-                
+            }).catch(err => {
+                console.log(err);
             })
         }
         if(req.body.hasOwnProperty('issueBook')){
-            Dashboard.findOneAndUpdate({studentId:dashboardStudentId,isbn: bookIsbn},{$set:{issued:true}},(err, found) => { //set the field to true once the student has issued
+            Dashboard.findOneAndUpdate({studentId:dashboardStudentId,isbn: bookIsbn},{$set:{issued:true}}).then(found => { //set the field to true once the student has issued
                 if(found){
                     res.redirect('/adminDashboard')
-                }else{
-                    console.log(err);
                 }
+            }).catch(err => {
+                console.log(err);
             })
-            Book.findOneAndUpdate({isbn : bookIsbn},{$inc:{qty : -1}},(err, result) =>{ // update the quantity of the book when the book is issued
-                if(err){
-                    console.log(err)
-                    return res.redirect('/');
-                }else{
+            Book.findOneAndUpdate({isbn : bookIsbn},{$inc:{qty : -1}}).then(result =>{ // update the quantity of the book when the book is issued
                     if(result){
                         console.log('success')
+                        const eventEmitter = req.app.get('eventEmitter');
+                        eventEmitter.emit('getBookQty', result.qty);                        
                     }
-                }
-            });
+            }).catch(err =>{
+                console.log(err);
+            }); 
         }
         },
-        getHistory(req, res){ //get the history
-            Student.find({activity:"returned"},(err, collection) =>{
-                if(collection){
-                    console.log(collection)
-                    res.render('admin/history',{studentCollection: collection})
-                    }else{
-                    console.log(err)
+        uploadExcel(req, res){
+            importExcelData2MongoDB(__dirname + '/excelUploads/' + req.file.filename);
+            function importExcelData2MongoDB(filePath){
+                // -> Read Excel File to Json Data
+                const excelData = excelToJson({
+                sourceFile: filePath,
+                sheets:[{
+                // Excel Sheet Name
+                name: 'Students',
+                // Header Row -> be skipped and will not be present at our result object.
+                header:{
+                rows: 1
+                },
+                // Mapping columns to keys
+                columnToKey: {
+                A: 'name',
+                B: 'enrollment',
+                C: 'standard',
+                D: 'email'
                 }
-            })
+                }]
+                });
+                // -> Log Excel Data to Console
+                console.log(excelData);
+                // Insert Json-Object to MongoDB
+                Student.insertMany(jsonObj,(err,data)=>{  
+                if(err){  
+                console.log(err);  
+                }else{  
+                res.redirect('/');  
+                }  
+                }); 
+                fs.unlinkSync(filePath);
+                }
         }
     }
 }

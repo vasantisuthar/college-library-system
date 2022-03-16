@@ -15,8 +15,8 @@
                   <div class="container-fluid py-0 d-flex flex-col justify-content-between">
                     <h4 class="display-7 fw-bold text-success"><%=student.studentId.enrollment%></h4></a>
                     <h5 class="display-7 fw-lighter text-secondary"><%=student.title%></h5></a>
-                    <%if(student.charge){%>
-                      <h3 class="display-7 fw-lighter text-danger"><span>&#8377;<%=student.charge%></span></h3>
+                    <%if(student.charge === 0){%>
+                      <h3 class="display-7 fw-lighter text-danger"><span>&#8377;<%=student.pay%></span></h3>
                     <%}%>                    
                     <form action="/returnIssuedBook" method="post">
                       <input type="hidden" name="bookIsbn" value="<%=student.isbn%>">
@@ -29,17 +29,12 @@
         <%}else{%>
           <!-- details of all the students -->
             <%foundStudents.forEach((student) =>{%>
+              <form action="/returnIssuedBook" method="post">
                 <div class="h-100 p-1 mb-2 bg-light border rounded-3">
                   <div class="container-fluid py-0 d-flex flex-col justify-content-between">
-                    <h4 class="display-7 fw-bold text-success"><%=student.studentId.enrollment%></h4></a>
+                    <a href="/dashboard/<%=student.studentId.enrollment%>" class="text-decoration-none"><h4 class="display-7 fw-bold text-success"><%=student.studentId.enrollment%></h4></a>
                     <h5 class="display-7 fw-medium text-secondary"><%=student.title%></h5></a>
-                    <%if(student.charge){%>
-                      <h3 class="display-7 fw-lighter text-danger"><span>&#8377;<%=student.pay%></span></h3>
-                    <%}%>
-
-                    <form action="/returnIssuedBook" method="post" class="justify-content-end">
-                      <input type="hidden" name="bookIsbn" value="<%=student.isbn%>">
-                      <input type="hidden" name="studentId" value="<%=student.studentId._id%>">
+                      
                       <%if(student.charge === 0){%>
                         <h3 class="display-7 fw-lighter text-danger"><span>&#8377;<%=student.pay%></span></h3>
                         <h5 class="display-7 fw-medium text-success">
@@ -48,11 +43,15 @@
                           <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
                         </svg>
                       </h5>
+                      <%}else if(student.charge>0){%>
+                        <h3 class="display-7 fw-lighter text-danger"><span>&#8377;<%=student.charge%></span></h3>
                       <%}%>
+                      <input type="hidden" name="bookIsbn" value="<%=student.isbn%>">
+                      <input type="hidden" name="studentId" value="<%=student.studentId._id%>">
                       <button class="btn btn-warning" name="returnBook" type="submit">Returned</button>
-                    </form>
                   </div>
                 </div>
+              </form>
           <%})%>
         <%}%>
         

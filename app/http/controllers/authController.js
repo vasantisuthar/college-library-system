@@ -1,5 +1,5 @@
 const passport = require("passport");
-const Student = require('../../models/student');
+const {Student} = require('../../models/student');
 function authController(){
     return{
         login(req,res){

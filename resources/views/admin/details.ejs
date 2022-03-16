@@ -19,14 +19,15 @@
                                 <button type="submit" class="btn btn-success" id="disableBtn" name="issueBook" onclick=disableButton()>Accept</button>
                             </div>
                         </form>
-
                             <div>
                                 <%if(detail.issued){%>
-                                    <p class="col-md-8 fs-4 text-success">Student has issued the book</p>
-                                <%}else{%>
-                                    <p class="col-md-8 fs-4 text-danger">Pending to be issued</p>
+                                    <svg class="text-success" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                    </svg>                                
+                                    <%}else{%>
+                                    <p class="col-md-8 fs-4 text-danger">Pending</p>
                                 <%}%>
-                                <%if(detail.charge){%>
+                                <%if(detail.charge>0){%>
                                     <p class="fs-5 text-danger">Charge : <span>&#8377;<%=detail.charge%></span></p>
                                 <%}%>
                             </div>

@@ -10,6 +10,9 @@ const session  = require('express-session');
 const MongoStore = require('connect-mongo');
 const passport = require("passport");
 const methodOverride = require('method-override');
+const Emitter = require('events');
+const socket = require('socket.io');
+
 const app = express();
 
 
@@ -21,6 +24,9 @@ connection.once('open',() => {
     console.log("database connected");
 })
 
+// event emitter
+const eventEmitter = new Emitter();
+app.set('eventEmitter', eventEmitter);
 
 app.use(methodOverride('_method'));
 //session config
@@ -65,6 +71,15 @@ app.use((req, res) => {
     res.status(404).render('errors/error');
 })
 
-app.listen(3000, () => {
+const server = app.listen(3000, () => {
     console.log("server started at port 3000");
+})
+const io = socket(server);
+
+io.on('connection', (socket) => {
+    console.log("socket connected");
+})
+
+eventEmitter.on('getBookQty',data =>{
+    io.emit('getBook', data);
 })
