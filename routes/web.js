@@ -71,8 +71,11 @@ function initRoutes(app){
     //student controller
     // app.post('/dashboard', studentController().dashboard);
     app.get('/dashboard', student ,studentController().getDashboard);
+    app.get('/newrequest',studentController().requestBook);
+    app.post('/sendrequest', studentController().requestForBook)
     app.post('/issueBook',student, studentController().issueBook);
     app.post('/removeIssuedBook', studentController().removeIssuedBook);
+
 
     // payment routes
     app.post("/payment", PaymentController().postRequestForPayment);

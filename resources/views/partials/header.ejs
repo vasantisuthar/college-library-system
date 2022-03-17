@@ -71,13 +71,14 @@
                     <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                         Resources
                     </a>
-                
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <li><a class="dropdown-item" href="/addresources" style="color:black;" >Add resources</a></li>
                         <li><a class="dropdown-item" href="/resources" style="color:black;">View resources</a></li>
-                    
                     </ul>
-                    </div>
+                </div>
+                <%if(user.role === 'Student'){%>
+                    <a class="pt-1" href="/newrequest">Request</a>
+                <%}%>
                 
                 <a href="/logout" class="pt-1">logout</a>
             </div>

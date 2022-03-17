@@ -4,7 +4,6 @@ const newsController = () => {
     return{
         getNews(req, res){
             const newsapi = new NewsAPI(process.env.news_api_key);
-            // To query /v2/top-headlines
             // All options passed to topHeadlines are optional, but you need to include at least one of them
             newsapi.v2.topHeadlines({
                 category: 'technology',

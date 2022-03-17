@@ -1,0 +1,24 @@
+<%- include('../partials/header') %>
+<div id="addBooks-box">
+    <div class="left">
+        <p>Request for book</p>
+        <%if(messages.error){%>
+        <p class="error-msg"><%=messages.error%></p>
+        <%}%>
+        <%if(messages.success){%>
+            <p class="success-msg"><%=messages.success%></p>
+        <%}%>
+        <form action="/sendrequest" method="post">
+            <input type="text" name="title" placeholder="Book Title" required/>
+            <input type="text" name="author" placeholder="Book Author" required/>
+            <div class="row">
+                <div class="col col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                    <input type="text" name="edition" placeholder="Book Edition" required/>
+                </div>
+            </div>
+            <input type="submit" class="w-50" name="submit" value="Send request" />
+        </form>
+
+    </div>
+    </div>
+<%- include('../partials/footer') %>

@@ -2,7 +2,6 @@ const csvtojson = require('csvtojson');
 const Book = require('../../../models/books');
 const {Dashboard} = require('../../../models/dashboard');
 const {Student} = require('../../../models/student');
-const History = require('../../../models/history');
 var excelToJson = require('convert-excel-to-json');
 
 const nodemailer = require('nodemailer');
@@ -210,60 +209,30 @@ function adminController(){
             function importExcelData2MongoDB(filePath){
                 // -> Read Excel File to Json Data
                 var arrayToInsert = [];
-csvtojson().fromFile(filePath).then(source => {
+                csvtojson().fromFile(filePath).then(source => {
     // Fetching the all data from each row
-    console.log(source)
-    for (var i = 0; i < source.length; i++) {
-        console.log(source[i]["name"])
-         var oneRow = {
-             name: source[i]["name"],
-             enrollment: source[i]["enrollment"],
-             standard: source[i]["standard"],
-             email: source[i]["email"]
-         };
-         arrayToInsert.push(oneRow);
-     }
-     //inserting into the table “employees”
-     
-     Student.insertMany(arrayToInsert, (err, result) => {
-         if (err) console.log(err);
-         if(result){
-             console.log(result)
-             console.log("Import CSV into database successfully.");
-             res.redirect('/')
-         }
-     });
-});
-                // const excelData = excelToJson({
-                // sourceFile: filePath,
-                // sheets:[{
-                // // Excel Sheet Name
-                // name: 'library1',
-                // // Header Row -> be skipped and will not be present at our result object.
-                // header:{
-                // rows: 1
-                // },
-                // // Mapping columns to keys
-                // columnToKey: {
-                // A: 'name',
-                // B: 'enrollment',
-                // C: 'standard',
-                // D: 'email'
-                // }
-                // }]
-                // });
-                // // -> Log Excel Data to Console
-                // console.log(excelData);
-                // // Insert Json-Object to MongoDB
-                // Student.insertMany(excelData,(err,data)=>{  
-                // if(err){  
-                // console.log(err);  
-                // }else{  
-                // res.redirect('/');  
-                // }  
-                // }); 
-                // // fs.unlinkSync(filePath);
+                for (var i = 0; i < source.length; i++) {
+                    console.log(source[i]["name"])
+                    var oneRow = {
+                        name: source[i]["name"],
+                        enrollment: source[i]["enrollment"],
+                        standard: source[i]["standard"],
+                        email: source[i]["email"]
+                    };
+                    arrayToInsert.push(oneRow);
                 }
+     //inserting into the table student
+
+                Student.insertMany(arrayToInsert, (err, result) => {
+                    if (err) console.log(err);
+                        if(result){
+                            console.log(result)
+                            console.log("Import CSV into database successfully.");
+                            res.redirect('/')
+                        }
+                    });
+                });
+            }
         }
     }
 }

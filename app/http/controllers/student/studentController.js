@@ -151,7 +151,18 @@ function studentController(){
                         console.log(err)
                     }
                 })
-        }
+        },
+        requestBook(req, res){
+            res.render('student/requestBook');
+        },
+        requestForBook(req, res){
+            var {title, author, edition} = req.body;
+            if(!title ||  !author || !edition){
+                req.flash('error',"All fields are required");
+                return res.redirect('/newrequest');
+            }
+
+        } 
     }
 }
 module.exports = studentController;
