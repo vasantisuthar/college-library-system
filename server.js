@@ -76,10 +76,11 @@ const server = app.listen(3000, () => {
 })
 const io = socket(server);
 
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
     console.log("socket connected");
 })
 
 eventEmitter.on('getBookQty',data =>{
+    console.log("from event emitter", data);
     io.emit('getBook', data);
 })

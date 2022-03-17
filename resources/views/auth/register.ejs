@@ -41,7 +41,7 @@
         <div class="body-main">
             <main class="form-signin">
                 <form action = "register" method="post">
-                    <h1 class="h3 mt-5 mb-3 fw-normal">Register a student</h1>
+                    <h1 class="h3 mt-5 mb-3 fw-normal text-secondary">Register a student</h1>
                     <%if(messages.error){%>
                         <p class="error-msg"><%=messages.error%></p>
                     <%}%>
@@ -72,12 +72,12 @@
                     <button class="w-100 btn btn-lg" type="submit">Register</button>
                     
                 </form>
-                <span>or</span>
-                <h4>Upload via excel csv file</h4>
-      <form action="/uploadExcelFile" enctype="multipart/form-data" method="post">
-        <input type="file" name="uploadfile" accept='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel' >
-        <input type="submit" class="m-3" value="Upload Excel">
-      </form>
+                <span class="mt-5">or</span>
+                <h4 class="text-secondary">Upload via excel csv file</h4>
+                <form action="/uploadExcelFile" enctype="multipart/form-data" method="post">
+                    <input type="file" name="uploadfile" accept='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel' >
+                    <input type="submit" class="p-10 w-100" value="Upload Excel">
+                </form>
             </main>
         </div>
     </div>

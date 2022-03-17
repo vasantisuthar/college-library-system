@@ -52,13 +52,14 @@ $text-color: #245569;
 
 
 .body-main{
-    max-height: 500px;
+    max-height: 550px;
     max-width:350px;
     margin:auto;
-    margin-top:5%;
+    margin-top:3%;
+    padding: 1% 1%;
     display: flex;
     align-items: center;
-    padding-bottom: 70px;
+    justify-content: center;
     background-color: #f5f5f5;
     margin-bottom: 7%;
     border-radius: 7px;
@@ -70,9 +71,8 @@ $text-color: #245569;
     width: 100%;
     max-width: 330px;
     padding: 7px;
-    margin: auto;
+    height: 100%;
     button{
-            
             color:white;
             background-color: $background-color;
             border:2px solid $light-color;
