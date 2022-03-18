@@ -13,7 +13,7 @@
                 <p class="fw-normal fs-5">ISBN : <span class="fw-lighter text-capitalize"><%=isbn%></span></p> 
                 <p class="fw-normal fs-5">Publisher : <span class="fw-lighter text-capitalize"><%=publisher%></span></p>
                 <p class="fw-normal fs-5">Published : <span class="fw-lighter text-capitalize"><%=moment(published).format("DD-MM-YYYY")%></span></p>
-                <p class="fw-normal fs-5">No of books available: <span class="fw-lighter text-capitalize" id="bookQty"></span></p>
+                <p class="fw-normal fs-5">No of books available: <span class="fw-lighter text-capitalize" id="bookQty"><%=qty%></span></p>
                 <input type="hidden" name="issueBookId" value="<%=bookId%>">
                 <%if(user.role === "admin"){%>
                     <p class="fw-normal fs-5">Total Books : <span class="fw-lighter text-capitalize"><%=totalBooks%></span></p>

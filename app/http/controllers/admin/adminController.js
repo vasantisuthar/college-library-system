@@ -3,6 +3,8 @@ const Book = require('../../../models/books');
 const {Dashboard} = require('../../../models/dashboard');
 const {Student} = require('../../../models/student');
 var excelToJson = require('convert-excel-to-json');
+const RequestBook = require('../../../models/requestBook');
+
 
 const nodemailer = require('nodemailer');
 
@@ -233,6 +235,63 @@ function adminController(){
                     });
                 });
             }
+        },
+        getRequestBooks(req,res){
+            RequestBook.find({}).then(found =>{
+                if(found){
+                    res.render('admin/bookRequestDetails',{foundBook : found});
+                }
+            }).catch(err =>{
+                console.log(err)
+            })
+        },
+        responseToRequestedBook(req, res){
+            const id = req.body.requestedBookId;
+            const studentId = req.body.studentId;
+            console.log(studentId);
+            RequestBook.findOneAndDelete({_id: id}).then(done =>{
+                if(done){
+
+                    Student.findOne({_id: studentId}).then((found) =>{
+                        var userEmail = process.env.email_id;
+                        var userPassword = process.env.user_password;
+
+                //send mail
+                var transporter = nodemailer.createTransport({
+                    host: "smtp.gmail.com",
+                    port: 587,                    
+                    auth: {
+                        user: userEmail,
+                        pass: userPassword
+                    },
+                    
+                    });
+                // setup e-mail data with unicode symbols
+                var mailOptions = {
+                    from: userEmail,    // sender address
+                    to: found.email, // list of receivers
+                    subject: 'Request for new book to e-library', // Subject line
+                    text: 'Your request is successfully approaved and book is available'      // plaintext body
+                     // html body
+                };
+
+                // send mail with defined transport object
+                transporter.sendMail(mailOptions, function(error, info){
+                    if(error){
+                        return console.log(error);
+                    }else{
+                        console.log("mail send")
+                    }
+                    
+                    console.log('Message sent: ' + info.response);
+                });
+                })
+                return res.redirect('/');
+                }
+            }).catch(err =>{
+                console.log(err)
+                res.redirect('/bookrequests');
+            })
         }
     }
 }

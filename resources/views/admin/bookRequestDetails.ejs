@@ -1,0 +1,22 @@
+<%- include('../partials/header') %>
+
+<div class="resource-container mt-4 mx-5">
+    <div class="card-container d-flex flex-row flex-wrap justify-content-center">
+            <%foundBook.forEach(book =>{%>
+                <div class="card fileCard p-4 m-2" style="width: 18rem;">
+                    <p>Title: <%=book.title%></p>
+                    <p>Author: <%=book.author%></p>
+                    <%if(book.edition){%>
+                        <p>Edition: <%=book.edition%></p>
+                    <%}%>
+                    <form action="/responseToRequestedBook" method="post">
+                        <input type="hidden" name="studentId" value="<%=book.studentId%>">
+                        <Button class="btn btn-success" name="requestedBookId" value="<%=book._id%>">Available</Button>
+                    </form>
+                </div>
+            <%})%>
+    </div>
+</div>
+
+
+<%- include('../partials/footer') %>

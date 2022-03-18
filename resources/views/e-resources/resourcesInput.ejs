@@ -30,15 +30,13 @@
                   <!-- <= file.filename %> -->
                   <a href="files/<%= file.filename %>" download><%= file.filename%></a>
                     <img src="files/<%= file.filename%>" id="myid" class="card-img-top" alt="" srcset="">
-
-                    <% } %>
+                  <% } %>
                     <div class="card-body">
                       <form method="post" action="/files/<%= file._id %>">
                         <button class="btn btn-danger btn-block deleteBtn">Delete</button>
                       </form>
                     </div>
-                      
-            </div>
+                  </div>
 
             <% }) %>
               <% }%>

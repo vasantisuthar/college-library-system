@@ -2,6 +2,7 @@ const {Student} = require('../../../models/student');
 const Book = require('../../../models/books');
 const {Dashboard} = require('../../../models/dashboard');
 const getPenalty = require('../../../config/penalty.js')
+const RequestBook = require('../../../models/requestBook');
 const moment = require('moment');
 
 function studentController(){
@@ -129,7 +130,6 @@ function studentController(){
                                     Student.findOneAndUpdate({_id:req.user._id},{$set:{activity:"returned"}},(err, returned) =>{
                                         if(returned){
                                             console.log("returned")
-                                            
                                         }else{
                                             console.log(err)
                                         }
@@ -157,9 +157,28 @@ function studentController(){
         },
         requestForBook(req, res){
             var {title, author, edition} = req.body;
-            if(!title ||  !author || !edition){
+            if(!title ||  !author){
                 req.flash('error',"All fields are required");
                 return res.redirect('/newrequest');
+            }else{
+                Book.findOne({title: title, author: author, edition: edition}).then(foundOne =>{
+                    if(foundOne){
+                        req.flash('error', "Book is already available");
+                    }else{
+                        const request = new RequestBook({
+                            studentId: req.user._id,
+                            title,
+                            author,
+                            edition
+                        });
+                        request.save().then(() =>{
+                            req.flash('success', "Request sent successfully you will be notified when the book is available");
+                            res.redirect('/newrequest');
+                        })
+                    }
+                }).catch(err =>{
+                    console.log(err);
+                })
             }
 
         } 

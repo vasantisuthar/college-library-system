@@ -98,6 +98,8 @@ function initRoutes(app){
     app.get('/student/currentlyissued',auth, adminController().currentlyIssued);
     app.post('/searchEnrollForIssued',adminController().searchEnrollForIssued);
     app.post('/uploadExcelFile', excelUploads.single("uploadfile"), adminController().uploadExcel);
+    app.get('/bookrequests', adminController().getRequestBooks);
+    app.post('/responseToRequestedBook', adminController().responseToRequestedBook);
     // app.post('/studentBookIsIssued', adminController().studentIssuedBook);
 
     //e-resources
