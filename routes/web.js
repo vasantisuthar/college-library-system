@@ -73,6 +73,7 @@ function initRoutes(app){
     
     // news 
     app.get('/news',auth, newsController().getNews);
+    
     //admin routes
     app.get('/add',admin,adminController().addbooks);
     app.post('/add',adminController().postBooks);

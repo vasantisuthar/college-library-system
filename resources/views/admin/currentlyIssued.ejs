@@ -14,8 +14,10 @@
                 <div class="h-100 p-1 mb-2 bg-light border rounded-3">
                   <div class="container-fluid py-0 d-flex flex-col justify-content-between">
                     <h4 class="display-7 fw-bold text-success"><%=student.studentId.enrollment%></h4></a>
-                    <h5 class="display-7 fw-bold text-secondary"><%=student.title%></h5></a>
-                    <h5 class="display-7 fw-bold text-secondary"><%=student.isbn%></h5></a>
+                    <h5 class="display-7 fw-lighter text-secondary"><%=student.title%></h5></a>
+                    <%if(student.charge){%>
+                      <h3 class="display-7 fw-lighter text-danger"><span>&#8377;<%=student.charge%></span></h3>
+                    <%}%>                    
                     <form action="/returnIssuedBook" method="post">
                       <input type="hidden" name="bookIsbn" value="<%=student.isbn%>">
                       <input type="hidden" name="studentId" value="<%=student.studentId._id%>">
@@ -30,8 +32,10 @@
                 <div class="h-100 p-1 mb-2 bg-light border rounded-3">
                   <div class="container-fluid py-0 d-flex flex-col justify-content-between">
                     <h4 class="display-7 fw-bold text-success"><%=student.studentId.enrollment%></h4></a>
-                    <h5 class="display-7 fw-bold text-secondary"><%=student.title%></h5></a>
-                    <h5 class="display-7 fw-bold text-secondary"><%=student.isbn%></h5></a>
+                    <h5 class="display-7 fw-medium text-secondary"><%=student.title%></h5></a>
+                    <%if(student.charge){%>
+                      <h3 class="display-7 fw-lighter text-danger"><span>&#8377;<%=student.charge%></span></h3>
+                    <%}%>
                     <form action="/returnIssuedBook" method="post" class="justify-content-end">
                       <input type="hidden" name="bookIsbn" value="<%=student.isbn%>">
                       <input type="hidden" name="studentId" value="<%=student.studentId._id%>">

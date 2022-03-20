@@ -43,16 +43,13 @@ function studentController(){
             getDashboard(req, res){
                 const publishable_key = process.env.publishable_key;
                 Dashboard.find({studentId: req.user._id},null,{sort: {'createdAt': -1}}, (err, foundBook) =>{
-
                     Student.findOne({_id:req.user._id},async (err, result)=>{
-                        
                         if(foundBook){
                             if(result){
                                 const charges = getPenalty(foundBook);
                                 const returnDate =  charges[0];
                                 const obj = charges[1];
-
-                                    if(moment().isAfter(returnDate)){
+                                if(moment().isAfter(returnDate)){
                                         var done = false;
                                         obj.forEach(async (singleObj) => {
                                             const updated = await Dashboard.findByIdAndUpdate({_id:singleObj.id},{$set:{"charge":singleObj.charge}},{upsert:true})
@@ -90,18 +87,10 @@ function studentController(){
                                                 isbn : foundBook.isbn
                                             })
                                                 dashboard.save().then(() =>{
-                                                Book.findOneAndUpdate({_id : issueBookId},{$inc:{qty : -1}},(err, result) =>{
-                                                    if(err){
-                                                        console.log(err)
-                                                        return res.redirect('/');
-                                                    }else{
-                                                        if(result){
-                                                            return res.redirect('/dashboard')
-                                                        }
-                                                    }
-                                                });
                                                 Student.findByIdAndUpdate({_id:req.user._id},{$set:{"activity":"issued"}},{upsert:true},(err, updated) =>{
-                                                    console.log("success")
+                                                    if(updated){
+                                                        return res.redirect('/dashboard')
+                                                    }
                                                 });
                                                 
                                             }).catch(err =>{

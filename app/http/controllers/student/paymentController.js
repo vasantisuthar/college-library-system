@@ -20,7 +20,9 @@ const PaymentController = () =>{
             }, function(err, charge) {
               // asynchronously called
               // student paid charge  
-              Dashboard.findByIdAndUpdate({_id:bookId},{$set:{"charge":null}},{upsert:true},(err, done)=>{
+              const date = new Date();
+              console.log("current date is " ,date);
+              Dashboard.findByIdAndUpdate({_id:bookId},{$set:{"charge":null, "updatedAt": date}},(err, done)=>{
                 if(done){
                   res.redirect('/dashboard');
                 }else{

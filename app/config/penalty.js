@@ -16,7 +16,11 @@ const getPenalty = (foundBook) =>{
             charge : ""
         }
         currentDate = moment(new Date())
-        returnDate = moment(book.createdAt).add(7, 'days')
+        if(book.updatedAt){
+           returnDate = book.updatedAt;
+        }else{
+            returnDate = moment(book.createdAt).add(7, 'days')
+        }
         days_diff = currentDate.diff(returnDate,'days')
         penalty = days_diff * price;
         

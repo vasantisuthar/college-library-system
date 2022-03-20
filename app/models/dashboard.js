@@ -15,6 +15,10 @@ const dashboardSchema = new mongoose.Schema({
         ref : 'Student',
         required : true
     },
-},{timestamps: true})
+    updatedAt:{type:Date, required:false}
+},{timestamps: {
+    createdAt:true,
+    updatedAt: false
+}})
 
 module.exports = mongoose.model('Dashboard',dashboardSchema);

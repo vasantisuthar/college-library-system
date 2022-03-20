@@ -192,7 +192,16 @@ function adminController(){
                     console.log(err);
                 }
             })
-            
+            Book.findOneAndUpdate({isbn : bookIsbn},{$inc:{qty : -1}},(err, result) =>{ // update the quantity of the book when the book is issued
+                if(err){
+                    console.log(err)
+                    return res.redirect('/');
+                }else{
+                    if(result){
+                        console.log('success')
+                    }
+                }
+            });
         }
         },
         getHistory(req, res){ //get the history
