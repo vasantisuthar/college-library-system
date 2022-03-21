@@ -9,7 +9,6 @@ const flash = require("express-flash");
 const session  = require('express-session');
 const MongoStore = require('connect-mongo');
 const passport = require("passport");
-const methodOverride = require('method-override');
 const Emitter = require('events');
 const socket = require('socket.io');
 
@@ -18,7 +17,7 @@ const app = express();
 
 // database connection
 
-mongoose.connect('mongodb://0.0.0.0:27017/Library')
+mongoose.connect(process.env.mongouri)
 const connection = mongoose.connection;
 connection.once('open',() => {
     console.log("database connected");
@@ -28,13 +27,12 @@ connection.once('open',() => {
 const eventEmitter = new Emitter();
 app.set('eventEmitter', eventEmitter);
 
-app.use(methodOverride('_method'));
 //session config
 app.use(session({
     secret:process.env.secret,
     resave:false,
     store:  MongoStore.create({
-        mongoUrl :'mongodb://0.0.0.0:27017/Library',
+        mongoUrl :process.env.mongouri,
         collectionName:"sessions"
     }),
     saveUninitialized:false,
