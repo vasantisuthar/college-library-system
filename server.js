@@ -18,7 +18,7 @@ const app = express();
 
 // database connection
 
-mongoose.connect('mongodb://localhost:27017/Library')
+mongoose.connect('mongodb://0.0.0.0:27017/Library')
 const connection = mongoose.connection;
 connection.once('open',() => {
     console.log("database connected");
@@ -31,10 +31,10 @@ app.set('eventEmitter', eventEmitter);
 app.use(methodOverride('_method'));
 //session config
 app.use(session({
-    secret:"Mysecretcode",
+    secret:process.env.secret,
     resave:false,
     store:  MongoStore.create({
-        mongoUrl :'mongodb://localhost:27017/Library',
+        mongoUrl :'mongodb://0.0.0.0:27017/Library',
         collectionName:"sessions"
     }),
     saveUninitialized:false,
@@ -81,6 +81,5 @@ io.on('connection', async (socket) => {
 })
 
 eventEmitter.on('getBookQty',data =>{
-    console.log("from event emitter", data);
     io.emit('getBook', data);
 })

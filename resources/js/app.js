@@ -10,6 +10,5 @@ socket.on('connect',() => {
 })
 
 socket.on('getBook', async (data) => {
-    console.log("from app.js" , data);
     qty.textContent = data    
 })

@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 let gfs;
 
 function init(mongoose){
-    mongoose.connect('mongodb://localhost:27017/Library')
+    mongoose.connect('mongodb://0.0.0.0:27017/Library')
     const connection = mongoose.connection;
 
         // `delay` returns a promise
