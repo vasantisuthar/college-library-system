@@ -81,9 +81,7 @@
 <form action="/search" method="post">
     <div class="nav-scroller bg-body shadow-sm">
         <nav class="nav nav-underline" aria-label="Secondary navigation">
-            <%if(user.role == "admin"){%>
                 <a class="nav-link active fs-6" aria-current="page" href="/news">Hacker News</a>
-            <%}%>
 
         <%if(user.role == "Student"){%>
             <a class="nav-link fs-6" href="#">

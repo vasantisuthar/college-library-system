@@ -10,7 +10,8 @@ const newsController = () => {
                 language: 'en',
                 country: 'in'
               }).then(response => {
-                res.render('news',{responses:response.articles})
+                console.log(response)
+                return res.render('news',{responses:response.articles})
                 /*
                   {
                     status: "ok",

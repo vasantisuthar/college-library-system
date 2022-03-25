@@ -18,16 +18,17 @@
                 <input class="form-control" required name="bookname" placeholder="Type to search...">
                 <button class="btn btn-outline-secondary" type="submit">Search</button>
             </form>
-
-                <%for(var i = 0; i<=9; i++){%>
-                    <form class="form-books" action="/dashboard" method="post">
-                        <div class="books-details">
-                            <p class="text-capitalize"><%=foundBooks[i].title%></p>
-                            <p class="text-capitalize"><%=foundBooks[i].author%></p>
-                       <a href="/book/<%=foundBooks[i]._id%>" class="issueBook">View</a>
-                    </div>
-                </form>
-            <%}%>
+                <%if(foundBooks.length != 0){%>
+                    <%for(var i = 0; i<=9; i++){%>
+                        <form class="form-books" action="/dashboard" method="post">
+                            <div class="books-details">
+                                <p class="text-capitalize"><%=foundBooks[i].title%></p>
+                                <p class="text-capitalize"><%=foundBooks[i].author%></p>
+                           <a href="/book/<%=foundBooks[i]._id%>" class="issueBook">View</a>
+                        </div>
+                    </form>
+                <%}%>
+                <%}%>
         </div>
     </div>
 

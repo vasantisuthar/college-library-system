@@ -1,9 +1,6 @@
 const mongoose = require('mongoose')
 const Resource = require('../../../models/resource');
-const multer = require('multer');
-const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
-const Grid1 = require('mongodb').Grid;
 
 
 //gfs

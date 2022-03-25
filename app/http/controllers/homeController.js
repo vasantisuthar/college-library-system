@@ -11,7 +11,7 @@ function homeController(){
                         if(!err){
                             if(student){
                                 studentName = student.name;
-                                res.render('home',{name: studentName, foundBooks: foundBooks});
+                                    res.render('home',{name: studentName, foundBooks: foundBooks});
                             }
                         }
                     })

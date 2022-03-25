@@ -2,7 +2,6 @@
 require('dotenv').config();
 const express = require('express');
 const ejs = require('ejs');
-const expressLayout = require('express-ejs-layouts');
 const path = require('path');
 const mongoose =require('mongoose');
 const flash = require("express-flash");
