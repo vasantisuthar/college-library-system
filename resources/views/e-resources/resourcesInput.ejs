@@ -25,17 +25,19 @@
             <div class="card fileCard p-2 m-2" style="width: 18rem;">
               <% if(file.isImage) { %>
                 <img src="image/<%= file.filename %>" class="card-img-top" alt="" >
-                <!-- <a href="image/<= file.filename %>" download><= file.filename %></a> -->
+                <a href="image/<= file.filename %>" download>Download</a>
                 <% } else { %>
                   <!-- <= file.filename %> -->
                   <a href="files/<%= file.filename %>" download><%= file.filename%></a>
                     <img src="files/<%= file.filename%>" id="myid" class="card-img-top" alt="" srcset="">
                   <% } %>
+                  <%if(user.role != 'Student'){%>
                     <div class="card-body">
                       <form method="post" action="/files/<%= file._id %>">
                         <button class="btn btn-danger btn-block deleteBtn">Delete</button>
                       </form>
                     </div>
+                  <%}%>
                   </div>
 
             <% }) %>
@@ -48,12 +50,15 @@
                         <h5 class="card-title"><%=item.title.toUpperCase()%></h5>
                         <a href="<%=item.link%>" class="card-link"><%=item.title%></a>
                         <p class="card-text"><%=item.description%></p>
-                        <form method="post" action="/deleteLink">
-                          <button name="deleteResource" value="<%=item.id%>" class="btn btn-danger btn-block" style="
-                            position: absolute;
-                            left: 0;
-                            bottom: 0;">Delete</button>
-                        </form>
+                        <%if(user.role != 'Student'){%>
+                          <form method="post" action="/deleteLink">
+                            <button name="deleteResource" value="<%=item.id%>" class="btn btn-danger btn-block" style="
+                              position: absolute;
+                              left: 0;
+                              bottom: 0;">Delete</button>
+                          </form>
+                        <%}%>
+                        
                       </div>
                     </div>
                   <%})%>

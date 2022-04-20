@@ -2,6 +2,7 @@ const multer = require('multer');
 const {GridFsStorage} = require('multer-gridfs-storage');
 const crypto = require('crypto')
 
+//excel storage
 var excelStorage = multer.diskStorage({  
     destination:(req,file,cb)=>{  
     cb(null,'./public/excelUploads');  
@@ -13,8 +14,9 @@ var excelStorage = multer.diskStorage({
 
 var excelUploads = multer({storage:excelStorage}); 
 
+// file image storage
 const storage = new GridFsStorage({
-    url: 'mongodb://localhost:27017/Library',
+    url: process.env.mongouri,
     file: (req, file) => {
         return new Promise((resolve, reject) => {
         crypto.randomBytes(16, (err, buf) => {
@@ -37,13 +39,7 @@ const storage = new GridFsStorage({
         storage
     });
 
-
-
-
-const express = require("express");
-
-
-const authController = require('../app/http/controllers/authController');
+    const authController = require('../app/http/controllers/authController');
 const homeController = require('../app/http/controllers/homeController');
 const adminController = require('../app/http/controllers/admin/adminController');
 const studentController = require('../app/http/controllers/student/studentController');

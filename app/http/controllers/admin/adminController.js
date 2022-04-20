@@ -2,7 +2,6 @@ const csvtojson = require('csvtojson');
 const Book = require('../../../models/books');
 const {Dashboard} = require('../../../models/dashboard');
 const {Student} = require('../../../models/student');
-var excelToJson = require('convert-excel-to-json');
 const RequestBook = require('../../../models/requestBook');
 
 
@@ -228,7 +227,6 @@ function adminController(){
                 Student.insertMany(arrayToInsert, (err, result) => {
                     if (err) console.log(err);
                         if(result){
-                            console.log(result)
                             console.log("Import CSV into database successfully.");
                             res.redirect('/')
                         }
